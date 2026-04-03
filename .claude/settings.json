@@ -1,0 +1,60 @@
+{
+  "permissions": {
+    "allowedTools": [
+      "Read", "Write", "Edit",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(uvicorn *)",
+      "Bash(pytest *)",
+      "Bash(black *)",
+      "Bash(isort *)",
+      "Bash(mypy *)",
+      "Bash(pyinstaller *)",
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(npx *)",
+      "Bash(vitest *)",
+      "Bash(eslint *)",
+      "Bash(tsc *)",
+      "Bash(cargo *)",
+      "Bash(rustfmt *)",
+      "Bash(git *)",
+      "Bash(sqlite3 *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(find *)",
+      "Bash(grep *)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)"
+    ]
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(*.py)",
+        "hooks": [
+          { "type": "command", "command": "black $file && isort $file" }
+        ]
+      },
+      {
+        "matcher": "Write(*.rs)",
+        "hooks": [
+          { "type": "command", "command": "rustfmt $file" }
+        ]
+      }
+    ]
+  }
+}

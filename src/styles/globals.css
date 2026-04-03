@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  /* Language colors */
+  --color-lang-python: #F59E0B;
+  --color-lang-typescript: #3B82F6;
+  --color-lang-rust: #EA580C;
+  --color-lang-javascript: #EAB308;
+  --color-lang-go: #06B6D4;
+  --color-lang-c: #94A3B8;
+  --color-lang-swift: #F97316;
+  --color-lang-html: #EC4899;
+  --color-lang-shell: #22C55E;
+
+  /* Status colors */
+  --color-status-active: #22C55E;
+  --color-status-paused: #F59E0B;
+  --color-status-archived: #6B7280;
+  --color-status-idea: #A78BFA;
+
+  /* Semantic colors */
+  --color-git-dirty: #F59E0B;
+  --color-git-clean: #22C55E;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+
+  /* Canvas / surface colors */
+  --color-canvas: #0a0a0f;
+  --color-surface: #141419;
+  --color-surface-hover: #1a1a22;
+  --color-panel: rgba(20, 20, 25, 0.85);
+
+  /* Text colors */
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  /* Border / divider */
+  --color-border: rgba(148, 163, 184, 0.1);
+  --color-border-hover: rgba(148, 163, 184, 0.2);
+
+  /* Font families */
+  --font-sans: "SF Pro", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}

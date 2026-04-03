@@ -1,0 +1,333 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.3 0 0 0  0 0 0 0 0  0 0 0 0.6 0" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="nodeGlowBlue" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0.5 0 0  0 0 0.5 0 0  0 0 1 0 0  0 0 0 0.5 0" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="nodeGlowYellow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0.6 0 0 0 0  0.4 0.3 0 0 0  0 0 0 0 0  0 0 0 0.4 0" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="selectedGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.3 0 0 0  0 0 0 0 0  0 0 0 0.8 0" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0.85 0 0 0 0  0.47 0 0 0 0  0.02 0 0 0 0  0 0 0 0.7 0"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="frosted" x="-5%" y="0" width="110%" height="100%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+    </pattern>
+    <linearGradient id="edgeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="edgeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="edgeGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="accentBarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="panelFadeBottom" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.98"/>
+    </linearGradient>
+    <clipPath id="panelClip">
+      <rect x="1020" y="0" width="420" height="900"/>
+    </clipPath>
+  </defs>
+
+  <!-- ===== CANVAS BACKGROUND ===== -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+  <rect width="1440" height="900" fill="url(#grid)"/>
+
+  <!-- ===== GRAPH EDGES ===== -->
+  <g opacity="0.5">
+    <path d="M 530 340 Q 400 300 290 240" fill="none" stroke="url(#edgeGrad1)" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <path d="M 530 380 Q 400 480 220 540" fill="none" stroke="url(#edgeGrad3)" stroke-width="1.2" stroke-dasharray="4,4"/>
+    <path d="M 600 400 Q 650 550 640 660" fill="none" stroke="url(#edgeGrad1)" stroke-width="1.2" stroke-dasharray="4,4"/>
+    <path d="M 600 320 Q 700 250 780 200" fill="none" stroke="url(#edgeGrad2)" stroke-width="1" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- ===== DIMMED GRAPH NODES ===== -->
+  <!-- WaveForm -->
+  <g opacity="0.45" filter="url(#nodeGlow)">
+    <circle cx="260" cy="220" r="28" fill="#111827" stroke="#d97706" stroke-width="1.2"/>
+    <circle cx="260" cy="220" r="4" fill="#d97706" opacity="0.6"/>
+    <text x="260" y="264" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#94a3b8">WaveForm</text>
+  </g>
+  <!-- RVC-Portal -->
+  <g opacity="0.35" filter="url(#nodeGlowYellow)">
+    <circle cx="200" cy="540" r="24" fill="#111827" stroke="#f0a030" stroke-width="1.2"/>
+    <circle cx="200" cy="540" r="3.5" fill="#f0a030" opacity="0.6"/>
+    <text x="200" y="578" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#94a3b8" opacity="0.7">RVC-Portal</text>
+  </g>
+  <!-- ts-utils -->
+  <g opacity="0.3" filter="url(#nodeGlowBlue)">
+    <circle cx="790" cy="190" r="20" fill="#111827" stroke="#3b82f6" stroke-width="1.2"/>
+    <circle cx="790" cy="190" r="3" fill="#3b82f6" opacity="0.6"/>
+    <text x="790" y="222" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#94a3b8" opacity="0.6">ts-utils</text>
+  </g>
+  <!-- Oxide -->
+  <g opacity="0.35" filter="url(#nodeGlow)">
+    <circle cx="640" cy="670" r="22" fill="#111827" stroke="#d97706" stroke-width="1.2"/>
+    <circle cx="640" cy="670" r="3" fill="#d97706" opacity="0.6"/>
+    <text x="640" y="704" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#94a3b8" opacity="0.6">Oxide</text>
+  </g>
+  <!-- ml-pipeline -->
+  <g opacity="0.2" filter="url(#nodeGlowYellow)">
+    <circle cx="80" cy="380" r="18" fill="#111827" stroke="#f0a030" stroke-width="1"/>
+    <circle cx="80" cy="380" r="2.5" fill="#f0a030" opacity="0.5"/>
+    <text x="80" y="408" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="9" fill="#94a3b8" opacity="0.4">ml-pipeline</text>
+  </g>
+
+  <!-- ===== SELECTED NODE: WaveForge ===== -->
+  <g filter="url(#selectedGlow)">
+    <circle cx="570" cy="370" r="38" fill="#111827" stroke="#d97706" stroke-width="2.5"/>
+    <circle cx="570" cy="370" r="42" fill="none" stroke="#d97706" stroke-width="0.8" opacity="0.3"/>
+    <circle cx="570" cy="370" r="48" fill="none" stroke="#d97706" stroke-width="0.4" opacity="0.12"/>
+    <circle cx="570" cy="370" r="6" fill="#d97706"/>
+    <text x="570" y="418" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="13" font-weight="600" fill="#e2e8f0">WaveForge</text>
+    <text x="570" y="434" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#d97706" opacity="0.7">Rust</text>
+  </g>
+
+  <!-- ===== PANEL SHADOW + BACKDROP ===== -->
+  <rect x="985" y="0" width="60" height="900" fill="black" opacity="0.2" filter="url(#frosted)"/>
+  <!-- Panel bg -->
+  <rect x="1020" y="0" width="420" height="900" fill="#0f172a" opacity="0.87"/>
+  <!-- Left border -->
+  <line x1="1020" y1="0" x2="1020" y2="900" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <!-- Top accent line -->
+  <rect x="1020" y="0" width="420" height="1" fill="#d97706" opacity="0.15"/>
+
+  <!-- ===== PANEL CONTENT (clipped) ===== -->
+  <g clip-path="url(#panelClip)">
+
+    <!-- ===== HEADER (y: 0-150) ===== -->
+    <!-- Row 1: Orb + Name -->
+    <circle cx="1048" cy="36" r="10" fill="#d97706" filter="url(#orbGlow)"/>
+    <circle cx="1048" cy="36" r="5" fill="#d97706"/>
+    <circle cx="1048" cy="36" r="3" fill="#fbbf24" opacity="0.5"/>
+    <text x="1070" y="43" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="20" font-weight="700" fill="#e2e8f0">WaveForge</text>
+    <!-- Close X -->
+    <rect x="1400" y="20" width="28" height="28" rx="6" fill="#1e293b"/>
+    <line x1="1409" y1="29" x2="1419" y2="39" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1419" y1="29" x2="1409" y2="39" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- Row 2: Language + status -->
+    <text x="1040" y="66" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="13" fill="#94a3b8">Rust <tspan fill="#64748b">&#183;</tspan> cpal, tokio</text>
+    <rect x="1178" y="54" width="58" height="20" rx="10" fill="#22c55e" fill-opacity="0.1"/>
+    <circle cx="1192" cy="64" r="3" fill="#22c55e"/>
+    <text x="1200" y="68" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" font-weight="500" fill="#22c55e">Active</text>
+
+    <!-- Row 3: Path -->
+    <text x="1040" y="88" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#64748b">~/VSCode-Projects/WaveForge</text>
+
+    <!-- Row 4: Quick actions -->
+    <rect x="1040" y="100" width="32" height="32" rx="8" fill="#1e293b"/>
+    <text x="1056" y="121" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="600" fill="#94a3b8">{ }</text>
+    <rect x="1080" y="100" width="32" height="32" rx="8" fill="#1e293b"/>
+    <text x="1096" y="121" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="600" fill="#94a3b8">&gt;_</text>
+    <rect x="1120" y="100" width="32" height="32" rx="8" fill="#1e293b"/>
+    <g transform="translate(1128,109)">
+      <path d="M1 4 L1 12 Q1 13 2 13 L14 13 Q15 13 15 12 L15 6 Q15 5 14 5 L8 5 L7 3 L2 3 Q1 3 1 4Z" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-linejoin="round"/>
+    </g>
+    <rect x="1160" y="100" width="32" height="32" rx="8" fill="#1e293b"/>
+    <g transform="translate(1168,108)">
+      <circle cx="8" cy="8" r="7" fill="none" stroke="#94a3b8" stroke-width="1.2"/>
+      <path d="M5.5 9.5 Q5 12 3.5 13" fill="none" stroke="#94a3b8" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M6 6 Q7 3 10 3.5 Q12 4 11.5 6 Q11 7.5 9.5 7.5 L8 8 L8 10" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="8" cy="11.5" r="0.8" fill="#94a3b8"/>
+    </g>
+
+    <!-- Header divider -->
+    <line x1="1040" y1="148" x2="1420" y2="148" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- ===== OVERVIEW (y: 148-420) ===== -->
+    <rect x="1040" y="164" width="2" height="12" rx="1" fill="url(#accentBarGrad)"/>
+    <text x="1052" y="174" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1.5">OVERVIEW</text>
+
+    <!-- Description -->
+    <text font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="13" fill="#94a3b8">
+      <tspan x="1040" y="198">Real-time audio synthesis engine built with</tspan>
+      <tspan x="1040" y="215">Rust. Generates waveforms, applies effects,</tspan>
+      <tspan x="1040" y="232">and outputs to system audio devices via cpal.</tspan>
+    </text>
+
+    <!-- Tech pills -->
+    <rect x="1040" y="248" width="42" height="24" rx="6" fill="#d97706" fill-opacity="0.18"/>
+    <text x="1061" y="264" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="500" fill="#d97706">rust</text>
+    <rect x="1090" y="248" width="42" height="24" rx="6" fill="#d97706" fill-opacity="0.18"/>
+    <text x="1111" y="264" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="500" fill="#d97706">cpal</text>
+    <rect x="1140" y="248" width="48" height="24" rx="6" fill="#d97706" fill-opacity="0.18"/>
+    <text x="1164" y="264" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="500" fill="#d97706">tokio</text>
+    <rect x="1196" y="248" width="48" height="24" rx="6" fill="#d97706" fill-opacity="0.18"/>
+    <text x="1220" y="264" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="500" fill="#d97706">serde</text>
+
+    <!-- Language bar -->
+    <rect x="1040" y="286" width="360" height="6" rx="3" fill="#1e293b"/>
+    <rect x="1040" y="286" width="306" height="6" rx="3" fill="#d97706"/>
+    <rect x="1346" y="286" width="36" height="6" fill="#94a3b8"/>
+    <rect x="1382" y="286" width="18" height="6" fill="#22c55e"/>
+    <rect x="1396" y="286" width="4" height="6" rx="3" fill="#22c55e"/>
+    <!-- Bar labels -->
+    <circle cx="1044" cy="304" r="3" fill="#d97706"/>
+    <text x="1053" y="307" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="9" fill="#64748b">Rust 85%</text>
+    <circle cx="1110" cy="304" r="3" fill="#94a3b8"/>
+    <text x="1119" y="307" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="9" fill="#64748b">TOML 10%</text>
+    <circle cx="1178" cy="304" r="3" fill="#22c55e"/>
+    <text x="1187" y="307" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="9" fill="#64748b">Shell 5%</text>
+
+    <!-- Stats row -->
+    <text x="1090" y="340" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="20" font-weight="700" fill="#e2e8f0" style="font-variant-numeric:tabular-nums">4,200</text>
+    <text x="1090" y="354" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">LOC</text>
+    <text x="1220" y="340" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="20" font-weight="700" fill="#e2e8f0" style="font-variant-numeric:tabular-nums">34</text>
+    <text x="1220" y="354" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">Files</text>
+    <text x="1350" y="340" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="20" font-weight="700" fill="#e2e8f0" style="font-variant-numeric:tabular-nums">2.1 MB</text>
+    <text x="1350" y="354" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">Size</text>
+
+    <!-- Tags -->
+    <rect x="1040" y="370" width="50" height="22" rx="6" fill="#d97706" fill-opacity="0.18"/>
+    <text x="1065" y="385" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#d97706">audio</text>
+    <rect x="1098" y="370" width="64" height="22" rx="6" fill="#64748b" fill-opacity="0.18"/>
+    <text x="1130" y="385" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#94a3b8">systems</text>
+    <rect x="1170" y="370" width="80" height="22" rx="6" fill="#22c55e" fill-opacity="0.18"/>
+    <text x="1210" y="385" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#22c55e">active-dev</text>
+    <!-- + button -->
+    <circle cx="1268" cy="381" r="11" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <line x1="1263" y1="381" x2="1273" y2="381" stroke="#64748b" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="1268" y1="376" x2="1268" y2="386" stroke="#64748b" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- Divider -->
+    <line x1="1040" y1="406" x2="1420" y2="406" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- ===== GIT SECTION (y: 406-680) ===== -->
+    <rect x="1040" y="420" width="2" height="12" rx="1" fill="url(#accentBarGrad)"/>
+    <text x="1052" y="430" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1.5">GIT</text>
+
+    <!-- Current branch -->
+    <circle cx="1048" cy="450" r="4" fill="#f59e0b"/>
+    <text x="1060" y="454" font-family="'SF Mono','Fira Code',monospace" font-size="12" font-weight="500" fill="#e2e8f0">feat/effects</text>
+    <text x="1165" y="454" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#f59e0b">3 uncommitted changes</text>
+
+    <!-- Commit log -->
+    <!-- 1 -->
+    <text x="1040" y="476" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12"><tspan fill="#22c55e" font-weight="500">feat: </tspan><tspan fill="#e2e8f0">add reverb effect chain</tspan></text>
+    <text x="1040" y="489" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#64748b">a3f2c1d</text>
+    <text x="1420" y="489" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">2 hours ago</text>
+    <!-- 2 -->
+    <text x="1040" y="508" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12"><tspan fill="#f59e0b" font-weight="500">fix: </tspan><tspan fill="#e2e8f0">buffer underrun on M1 macs</tspan></text>
+    <text x="1040" y="521" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#64748b">b7e9d04</text>
+    <text x="1420" y="521" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">5 hours ago</text>
+    <!-- 3 -->
+    <text x="1040" y="540" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12"><tspan fill="#3b82f6" font-weight="500">refactor: </tspan><tspan fill="#e2e8f0">extract oscillator module</tspan></text>
+    <text x="1040" y="553" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#64748b">c1a8f32</text>
+    <text x="1420" y="553" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">yesterday</text>
+    <!-- 4 -->
+    <text x="1040" y="572" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12"><tspan fill="#a78bfa" font-weight="500">docs: </tspan><tspan fill="#e2e8f0">update API reference</tspan></text>
+    <text x="1040" y="585" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#64748b">d4b2e67</text>
+    <text x="1420" y="585" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">2 days ago</text>
+    <!-- 5 -->
+    <text x="1040" y="604" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12"><tspan fill="#22c55e" font-weight="500">feat: </tspan><tspan fill="#e2e8f0">MIDI input support</tspan></text>
+    <text x="1040" y="617" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#64748b">e8c3a19</text>
+    <text x="1420" y="617" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">3 days ago</text>
+
+    <!-- Branch list -->
+    <text x="1040" y="640" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b" letter-spacing="0.5">BRANCHES</text>
+    <text x="1040" y="656" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#94a3b8">main</text>
+    <rect x="1076" y="645" width="88" height="18" rx="4" fill="#d97706" fill-opacity="0.1"/>
+    <text x="1080" y="656" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#d97706" font-weight="500">feat/effects</text>
+    <text x="1172" y="656" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#94a3b8">dev</text>
+
+    <!-- Dirty files -->
+    <text x="1040" y="680" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b" letter-spacing="0.5">CHANGES</text>
+    <text x="1040" y="696" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="700" fill="#f59e0b">M</text>
+    <text x="1058" y="696" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#94a3b8">src/effects/reverb.rs</text>
+    <text x="1040" y="712" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="700" fill="#22c55e">A</text>
+    <text x="1058" y="712" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#94a3b8">src/effects/delay.rs</text>
+    <text x="1040" y="728" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="700" fill="#f59e0b">M</text>
+    <text x="1058" y="728" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#94a3b8">Cargo.toml</text>
+
+    <!-- Divider -->
+    <line x1="1040" y1="744" x2="1420" y2="744" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- ===== CONNECTIONS (y: 744-830) ===== -->
+    <rect x="1040" y="758" width="2" height="12" rx="1" fill="url(#accentBarGrad)"/>
+    <text x="1052" y="768" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1.5">CONNECTIONS</text>
+
+    <!-- Connection 1: WaveForm -->
+    <circle cx="1048" cy="790" r="4" fill="#d97706"/>
+    <text x="1060" y="794" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12" font-weight="500" fill="#e2e8f0">WaveForm</text>
+    <text x="1136" y="794" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">auto: shared [rust, cpal]</text>
+    <rect x="1320" y="787" width="80" height="4" rx="2" fill="#1e293b"/>
+    <rect x="1320" y="787" width="68" height="4" rx="2" fill="#d97706"/>
+
+    <!-- Connection 2: RVC-Portal -->
+    <circle cx="1048" cy="812" r="4" fill="#f0a030"/>
+    <text x="1060" y="816" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12" font-weight="500" fill="#e2e8f0">RVC-Portal</text>
+    <text x="1142" y="816" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">manual: audio pipeline ref</text>
+    <rect x="1320" y="809" width="80" height="4" rx="2" fill="#1e293b"/>
+    <rect x="1320" y="809" width="32" height="4" rx="2" fill="#d97706" opacity="0.7"/>
+
+    <!-- Connection 3: Oxide -->
+    <circle cx="1048" cy="834" r="4" fill="#d97706"/>
+    <text x="1060" y="838" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="12" font-weight="500" fill="#e2e8f0">Oxide</text>
+    <text x="1100" y="838" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#64748b">auto: shared [rust]</text>
+    <rect x="1320" y="831" width="80" height="4" rx="2" fill="#1e293b"/>
+    <rect x="1320" y="831" width="48" height="4" rx="2" fill="#d97706" opacity="0.85"/>
+
+    <!-- + Draw connection -->
+    <text x="1040" y="858" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" font-weight="500" fill="#d97706">+ Draw connection</text>
+
+    <!-- Cluster pills -->
+    <rect x="1160" y="846" width="96" height="20" rx="10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1208" y="860" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#94a3b8">Audio Projects</text>
+    <rect x="1264" y="846" width="42" height="20" rx="10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1285" y="860" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="10" fill="#94a3b8">Rust</text>
+
+    <!-- Divider -->
+    <line x1="1040" y1="872" x2="1420" y2="872" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- ===== META SECTION (y: 872-900) ===== -->
+    <text x="1040" y="886" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b">First seen: Jan 15, 2024</text>
+    <text x="1220" y="886" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b">Last scanned: 2 min ago</text>
+    <text x="1040" y="902" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b">Last opened: Today, 3:42 PM</text>
+
+    <!-- Action buttons (partially visible = scroll hint) -->
+    <rect x="1040" y="916" width="70" height="26" rx="6" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1075" y="933" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b">Archive</text>
+    <rect x="1118" y="916" width="66" height="26" rx="6" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1151" y="933" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b">Rescan</text>
+    <rect x="1192" y="916" width="30" height="26" rx="6" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1207" y="934" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="14" fill="#64748b">&#8943;</text>
+
+  </g>
+
+  <!-- Scroll track on right edge of panel -->
+  <rect x="1436" y="4" width="3" height="892" rx="1.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="1436" y="4" width="3" height="340" rx="1.5" fill="#d97706" opacity="0.25"/>
+
+  <!-- ===== ANNOTATION (on graph canvas) ===== -->
+  <text x="60" y="820" font-family="-apple-system,BlinkMacSystemFont,'SF Pro',sans-serif" font-size="11" fill="#64748b" font-style="italic" opacity="0.6">Accent color derives from project's primary language -- changes per project</text>
+  <line x1="60" y1="826" x2="520" y2="826" stroke="#64748b" stroke-width="0.3" opacity="0.3"/>
+
+</svg>

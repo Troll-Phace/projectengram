@@ -1,0 +1,546 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <!-- Glow filters -->
+    <filter id="glowRust" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.3 0 0 0  0 0 0 0 0  0 0 0 0.30 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowRustDim" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.3 0 0 0  0 0 0 0 0  0 0 0 0.12 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowPython" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.4 0 0 0  0 0 0 0 0  0 0 0 0.25 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowPythonDim" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.6 0.4 0 0 0  0 0 0 0 0  0 0 0 0.10 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowTS" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0.3 0 0 0  0 0 1 0 0  0 0 0 0.25 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowSwift" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0.4 0.2 0 0 0  0 0 0 0 0  0 0 0 0.25 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIdea" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0.5 0 0 0 0  0 0.3 0 0 0  0 0 0.8 0 0  0 0 0 0.20 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+      <feOffset in="blur" dx="0" dy="2" result="offset"/>
+      <feFlood flood-color="#000" flood-opacity="0.5" result="color"/>
+      <feComposite in="color" in2="offset" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Radial gradients for node cores -->
+    <radialGradient id="gradRust" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </radialGradient>
+    <radialGradient id="gradRustSmall" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </radialGradient>
+    <radialGradient id="gradPython" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="50%" stop-color="#f0a030"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </radialGradient>
+    <radialGradient id="gradTS" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </radialGradient>
+    <radialGradient id="gradSwift" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#fdba74"/>
+      <stop offset="50%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </radialGradient>
+
+    <!-- Arrowhead marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" opacity="0.7"/>
+    </marker>
+    <marker id="arrowheadEdge" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(60,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(120,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(180,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(240,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(300,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(360,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(420,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(480,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(540,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(600,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(660,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(720,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(780,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(840,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(900,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(960,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1020,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1080,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1140,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1200,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1260,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1320,0)"/>
+    <line x1="0" y1="0" x2="0" y2="900" stroke="#e2e8f0" stroke-width="0.5" transform="translate(1380,0)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,60)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,120)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,180)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,240)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,300)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,360)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,420)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,480)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,540)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,600)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,660)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,720)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,780)"/>
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#e2e8f0" stroke-width="0.5" transform="translate(0,840)"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- TITLE                                        -->
+  <!-- ============================================ -->
+  <text x="720" y="42" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="500" fill="#64748b" letter-spacing="4" text-transform="uppercase">NODE ANATOMY</text>
+  <text x="720" y="60" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#475569" letter-spacing="1.5">ENGRAM PROJECT GRAPH  --  COMPONENT REFERENCE</text>
+  <line x1="320" y1="72" x2="1120" y2="72" stroke="#1e293b" stroke-width="0.5"/>
+
+
+  <!-- ============================================ -->
+  <!-- 1. MAIN NODE (WaveForge)                     -->
+  <!-- ============================================ -->
+  <g id="mainNode">
+    <!-- Glow halo -->
+    <circle cx="420" cy="340" r="120" fill="#d97706" opacity="0.08" filter="url(#glowRust)"/>
+    <circle cx="420" cy="340" r="100" fill="#d97706" opacity="0.12"/>
+
+    <!-- Orbit path for satellite dots -->
+    <circle cx="420" cy="340" r="110" fill="none" stroke="#d97706" stroke-width="0.5" stroke-dasharray="3,6" opacity="0.15"/>
+
+    <!-- Satellite dots (git branches) -->
+    <circle cx="530" cy="335" r="4" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="380" cy="235" r="4" fill="#fbbf24" opacity="0.55"/>
+    <circle cx="335" cy="415" r="4" fill="#fbbf24" opacity="0.4"/>
+
+    <!-- Clean ring indicator (solid) -->
+    <circle cx="420" cy="340" r="82" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.5"/>
+
+    <!-- Node core -->
+    <circle cx="420" cy="340" r="80" fill="url(#gradRust)" filter="url(#glowRust)"/>
+
+    <!-- Inner highlight -->
+    <circle cx="405" cy="320" r="30" fill="#fef3c7" opacity="0.08"/>
+  </g>
+
+  <!-- Hover tooltip -->
+  <g id="hoverTooltip" filter="url(#softShadow)">
+    <rect x="475" y="248" width="170" height="68" rx="8" ry="8" fill="#1e293b" fill-opacity="0.88" stroke="#334155" stroke-width="0.5"/>
+    <text x="489" y="269" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="14" font-weight="600" fill="#e2e8f0">WaveForge</text>
+    <text x="489" y="287" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" fill="#94a3b8">Rust · cpal, tokio</text>
+    <text x="489" y="305" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#64748b">Last commit: 2h ago</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- CALLOUT ANNOTATIONS — Main Node              -->
+  <!-- ============================================ -->
+
+  <!-- Callout: Node Core / Radius ~ LOC -->
+  <g class="callout">
+    <circle cx="370" cy="300" r="2" fill="#64748b"/>
+    <line x1="370" y1="300" x2="140" y2="210" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="140" y1="210" x2="60" y2="210" stroke="#64748b" stroke-width="0.75"/>
+    <text x="60" y="203" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Node core</text>
+    <text x="60" y="218" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Radial gradient, language color</text>
+    <text x="60" y="231" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#64748b">Radius &#x221D; LOC</text>
+  </g>
+
+  <!-- Callout: Glow Halo -->
+  <g class="callout">
+    <circle cx="342" cy="265" r="2" fill="#64748b"/>
+    <line x1="342" y1="265" x2="140" y2="136" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="140" y1="136" x2="60" y2="136" stroke="#64748b" stroke-width="0.75"/>
+    <text x="60" y="129" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Glow halo</text>
+    <text x="60" y="144" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Brightness = recent activity</text>
+  </g>
+
+  <!-- Callout: Clean ring -->
+  <g class="callout">
+    <circle cx="350" cy="380" r="2" fill="#64748b"/>
+    <line x1="350" y1="380" x2="140" y2="440" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="140" y1="440" x2="40" y2="440" stroke="#64748b" stroke-width="0.75"/>
+    <text x="40" y="433" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Solid ring</text>
+    <text x="40" y="448" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Clean git status</text>
+  </g>
+
+  <!-- Callout: Satellite dots -->
+  <g class="callout">
+    <circle cx="335" cy="415" r="2" fill="#64748b"/>
+    <line x1="335" y1="415" x2="140" y2="504" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="140" y1="504" x2="40" y2="504" stroke="#64748b" stroke-width="0.75"/>
+    <text x="40" y="497" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Satellite dots</text>
+    <text x="40" y="512" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Git branches (3)</text>
+  </g>
+
+  <!-- Callout: Hover Tooltip -->
+  <g class="callout">
+    <circle cx="645" cy="280" r="2" fill="#64748b"/>
+    <line x1="645" y1="280" x2="710" y2="280" stroke="#64748b" stroke-width="0.75"/>
+    <text x="716" y="276" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Hover tooltip</text>
+    <text x="716" y="291" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Name, deps, last commit</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- DIRTY RING VARIANT (below main node)         -->
+  <!-- ============================================ -->
+  <g id="dirtyRingVariant">
+    <!-- Small node with dashed ring -->
+    <circle cx="200" cy="610" r="52" fill="#d97706" opacity="0.06"/>
+    <circle cx="200" cy="610" r="42" fill="url(#gradRust)" filter="url(#glowRustDim)" opacity="0.85"/>
+    <!-- Dashed ring -->
+    <circle cx="200" cy="610" r="44" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6,4" opacity="0.6"/>
+    <text x="200" y="665" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" fill="#94a3b8">Dirty variant</text>
+  </g>
+
+  <!-- Callout: Dashed ring -->
+  <g class="callout">
+    <circle cx="165" cy="575" r="2" fill="#64748b"/>
+    <line x1="165" y1="575" x2="68" y2="565" stroke="#64748b" stroke-width="0.75"/>
+    <text x="24" y="558" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Dashed ring</text>
+    <text x="24" y="573" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Uncommitted changes</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- 2. SIZE COMPARISON (top right)               -->
+  <!-- ============================================ -->
+  <g id="sizeComparison">
+    <!-- Section label -->
+    <text x="870" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">SIZE COMPARISON</text>
+    <line x1="870" y1="115" x2="1040" y2="115" stroke="#1e293b" stroke-width="0.5"/>
+
+    <!-- Small node: dino -->
+    <circle cx="910" cy="170" r="16" fill="url(#gradPython)" filter="url(#glowPythonDim)"/>
+    <circle cx="910" cy="170" r="17" fill="none" stroke="#f0a030" stroke-width="1" opacity="0.3"/>
+    <text x="910" y="198" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">dino</text>
+    <text x="910" y="211" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">600 LOC</text>
+
+    <!-- Large node: RVC-Portal -->
+    <circle cx="1010" cy="170" r="40" fill="url(#gradPython)" filter="url(#glowPython)"/>
+    <circle cx="1010" cy="170" r="42" fill="none" stroke="#f0a030" stroke-width="1.5" opacity="0.3"/>
+    <text x="1010" y="224" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">RVC-Portal</text>
+    <text x="1010" y="237" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">6,200 LOC</text>
+
+    <!-- Annotation -->
+    <text x="960" y="257" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Node size scales with project complexity (LOC)</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- 3. CONNECTED EDGES                           -->
+  <!-- ============================================ -->
+
+  <!-- === Edge 1: Thick edge to WaveForm (TypeScript) === -->
+  <g id="edgeThick">
+    <!-- Edge line -->
+    <line x1="488" y1="306" x2="740" y2="180" stroke="#3b82f6" stroke-width="3.5" opacity="0.45"/>
+    <!-- Target node -->
+    <circle cx="760" cy="168" r="22" fill="url(#gradTS)" filter="url(#glowTS)"/>
+    <circle cx="760" cy="168" r="24" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.35"/>
+    <text x="760" y="202" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">WaveForm</text>
+    <text x="760" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" fill="#3b82f6" opacity="0.7">TypeScript</text>
+  </g>
+  <!-- Callout: Thick edge -->
+  <g class="callout">
+    <circle cx="614" cy="243" r="2" fill="#64748b"/>
+    <line x1="614" y1="243" x2="614" y2="310" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="614" y1="310" x2="670" y2="310" stroke="#64748b" stroke-width="0.75"/>
+    <text x="616" y="326" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Thick edge</text>
+    <text x="616" y="341" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#64748b">weight: 0.85</text>
+  </g>
+
+  <!-- === Edge 2: Thin edge to RVC-Portal (Python) === -->
+  <g id="edgeThin">
+    <line x1="490" y1="370" x2="750" y2="470" stroke="#f0a030" stroke-width="1.5" opacity="0.35"/>
+    <!-- Target node -->
+    <circle cx="770" cy="480" r="20" fill="url(#gradPython)" filter="url(#glowPythonDim)"/>
+    <circle cx="770" cy="480" r="22" fill="none" stroke="#f0a030" stroke-width="1" opacity="0.25"/>
+    <text x="770" y="512" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">RVC-Portal</text>
+    <text x="770" y="524" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" fill="#f0a030" opacity="0.7">Python</text>
+  </g>
+  <!-- Callout: Thin edge -->
+  <g class="callout">
+    <circle cx="630" cy="426" r="2" fill="#64748b"/>
+    <line x1="630" y1="426" x2="630" y2="389" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="630" y1="389" x2="670" y2="389" stroke="#64748b" stroke-width="0.75"/>
+    <text x="616" y="381" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Thin edge</text>
+    <text x="616" y="396" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#64748b">weight: 0.40</text>
+  </g>
+
+  <!-- === Edge 3: Edge with particles to SynthPad (Swift) === -->
+  <g id="edgeParticles">
+    <line x1="496" y1="330" x2="800" y2="350" stroke="#f97316" stroke-width="2" opacity="0.35"/>
+    <!-- Particle dots along the edge -->
+    <circle cx="560" cy="333" r="2.5" fill="#fdba74" opacity="0.9"/>
+    <circle cx="630" cy="337" r="2.5" fill="#fdba74" opacity="0.7"/>
+    <circle cx="700" cy="341" r="2.5" fill="#fdba74" opacity="0.5"/>
+    <circle cx="760" cy="345" r="2.5" fill="#fdba74" opacity="0.35"/>
+    <!-- Target node -->
+    <circle cx="820" cy="352" r="20" fill="url(#gradSwift)" filter="url(#glowSwift)"/>
+    <circle cx="820" cy="352" r="22" fill="none" stroke="#f97316" stroke-width="1" opacity="0.3"/>
+    <text x="820" y="384" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">SynthPad</text>
+    <text x="820" y="396" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" fill="#f97316" opacity="0.7">Swift</text>
+  </g>
+  <!-- Callout: Particle dots -->
+  <g class="callout">
+    <circle cx="700" cy="341" r="2" fill="#64748b"/>
+    <line x1="700" y1="341" x2="700" y2="358" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="700" y1="358" x2="744" y2="358" stroke="#64748b" stroke-width="0.75"/>
+    <text x="706" y="372" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Particle dots</text>
+    <text x="706" y="387" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Active data flow</text>
+  </g>
+
+  <!-- === Edge 4: Manual (dashed) edge with arrowhead === -->
+  <g id="edgeManual">
+    <line x1="480" y1="400" x2="730" y2="560" stroke="#94a3b8" stroke-width="2" stroke-dasharray="12,5" opacity="0.35" marker-end="url(#arrowheadEdge)"/>
+    <!-- Target node -->
+    <circle cx="750" cy="575" r="20" fill="url(#gradTS)" filter="url(#glowTS)" opacity="0.75"/>
+    <circle cx="750" cy="575" r="22" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.25"/>
+    <text x="750" y="607" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#94a3b8">engram-ui</text>
+    <text x="750" y="619" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" fill="#3b82f6" opacity="0.7">TypeScript</text>
+  </g>
+  <!-- Callout: Dashed = manual connection -->
+  <g class="callout">
+    <circle cx="605" cy="480" r="2" fill="#64748b"/>
+    <line x1="605" y1="480" x2="605" y2="460" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="605" y1="460" x2="648" y2="460" stroke="#64748b" stroke-width="0.75"/>
+    <text x="560" y="452" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Dashed = manual</text>
+    <text x="560" y="467" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">User-defined connection</text>
+  </g>
+  <!-- Callout: Arrow = directed dependency -->
+  <g class="callout">
+    <circle cx="700" cy="538" r="2" fill="#64748b"/>
+    <line x1="700" y1="538" x2="700" y2="555" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="700" y1="555" x2="745" y2="555" stroke="#64748b" stroke-width="0.75"/>
+    <text x="640" y="568" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Arrow = directed</text>
+    <text x="640" y="583" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Dependency direction</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- EDGE TYPES LEGEND (right side)               -->
+  <!-- ============================================ -->
+  <g id="edgeLegend">
+    <text x="1050" y="310" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">EDGE TYPES</text>
+    <line x1="1050" y1="317" x2="1220" y2="317" stroke="#1e293b" stroke-width="0.5"/>
+
+    <!-- High weight -->
+    <line x1="1060" y1="340" x2="1120" y2="340" stroke="#94a3b8" stroke-width="3.5" opacity="0.5"/>
+    <text x="1130" y="344" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">High weight (thick)</text>
+
+    <!-- Low weight -->
+    <line x1="1060" y1="365" x2="1120" y2="365" stroke="#94a3b8" stroke-width="1.5" opacity="0.5"/>
+    <text x="1130" y="369" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Low weight (thin)</text>
+
+    <!-- Manual -->
+    <line x1="1060" y1="390" x2="1120" y2="390" stroke="#94a3b8" stroke-width="2" stroke-dasharray="12,5" opacity="0.5"/>
+    <text x="1130" y="394" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Manual connection</text>
+
+    <!-- Directed -->
+    <line x1="1060" y1="415" x2="1115" y2="415" stroke="#94a3b8" stroke-width="2" opacity="0.5" marker-end="url(#arrowhead)"/>
+    <text x="1130" y="419" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Directed dependency</text>
+
+    <!-- Particles -->
+    <line x1="1060" y1="440" x2="1120" y2="440" stroke="#94a3b8" stroke-width="2" opacity="0.3"/>
+    <circle cx="1070" cy="440" r="2" fill="#e2e8f0" opacity="0.8"/>
+    <circle cx="1083" cy="440" r="2" fill="#e2e8f0" opacity="0.6"/>
+    <circle cx="1096" cy="440" r="2" fill="#e2e8f0" opacity="0.4"/>
+    <circle cx="1109" cy="440" r="2" fill="#e2e8f0" opacity="0.25"/>
+    <text x="1130" y="444" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Active data flow</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- LANGUAGE COLOR LEGEND (right side)           -->
+  <!-- ============================================ -->
+  <g id="languageLegend">
+    <text x="1050" y="500" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">LANGUAGE COLORS</text>
+    <line x1="1050" y1="507" x2="1220" y2="507" stroke="#1e293b" stroke-width="0.5"/>
+
+    <circle cx="1068" cy="530" r="6" fill="#d97706"/>
+    <text x="1082" y="534" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" fill="#94a3b8">Rust</text>
+    <text x="1130" y="534" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">#d97706</text>
+
+    <circle cx="1068" cy="555" r="6" fill="#f0a030"/>
+    <text x="1082" y="559" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" fill="#94a3b8">Python</text>
+    <text x="1130" y="559" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">#f0a030</text>
+
+    <circle cx="1068" cy="580" r="6" fill="#3b82f6"/>
+    <text x="1082" y="584" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" fill="#94a3b8">TypeScript</text>
+    <text x="1145" y="584" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">#3b82f6</text>
+
+    <circle cx="1068" cy="605" r="6" fill="#f97316"/>
+    <text x="1082" y="609" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" fill="#94a3b8">Swift</text>
+    <text x="1130" y="609" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#64748b">#f97316</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- STATUS COLORS LEGEND                         -->
+  <!-- ============================================ -->
+  <g id="statusLegend">
+    <text x="1050" y="660" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">STATUS COLORS</text>
+    <line x1="1050" y1="667" x2="1220" y2="667" stroke="#1e293b" stroke-width="0.5"/>
+
+    <circle cx="1068" cy="688" r="4" fill="#22c55e"/>
+    <text x="1082" y="692" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Active</text>
+
+    <circle cx="1068" cy="710" r="4" fill="#f59e0b"/>
+    <text x="1082" y="714" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Paused</text>
+
+    <circle cx="1068" cy="732" r="4" fill="#6b7280"/>
+    <text x="1082" y="736" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Archived</text>
+
+    <circle cx="1068" cy="754" r="4" fill="#a78bfa"/>
+    <text x="1082" y="758" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#94a3b8">Idea</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- 4. IDEA NODE VARIANT (bottom left)           -->
+  <!-- ============================================ -->
+  <g id="ideaNode">
+    <!-- Section label -->
+    <text x="380" y="710" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">IDEA NODE</text>
+    <line x1="380" y1="717" x2="500" y2="717" stroke="#1e293b" stroke-width="0.5"/>
+
+    <!-- Soft idea glow -->
+    <circle cx="440" cy="790" r="50" fill="#a78bfa" opacity="0.04" filter="url(#glowIdea)"/>
+
+    <!-- Dashed outline node -->
+    <circle cx="440" cy="790" r="32" fill="#a78bfa" opacity="0.08"/>
+    <circle cx="440" cy="790" r="32" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+
+    <!-- Lightbulb symbol (4-pointed star) -->
+    <text x="440" y="796" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="18" fill="#a78bfa" opacity="0.6">&#x2726;</text>
+
+    <!-- Label -->
+    <text x="440" y="838" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#94a3b8">micrOS</text>
+    <!-- Status badge -->
+    <rect x="417" y="845" width="46" height="16" rx="4" fill="#a78bfa" opacity="0.15"/>
+    <text x="440" y="856" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" font-weight="500" fill="#a78bfa">Idea</text>
+  </g>
+
+  <!-- Callout: Idea node -->
+  <g class="callout">
+    <circle cx="415" cy="768" r="2" fill="#64748b"/>
+    <line x1="415" y1="768" x2="322" y2="748" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="322" y1="748" x2="300" y2="748" stroke="#64748b" stroke-width="0.75"/>
+    <text x="300" y="741" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Idea node</text>
+    <text x="300" y="756" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Dashed outline, no language color</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- 5. MISSING NODE VARIANT (bottom center)      -->
+  <!-- ============================================ -->
+  <g id="missingNode">
+    <!-- Section label -->
+    <text x="640" y="710" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="500" fill="#64748b" letter-spacing="2">MISSING NODE</text>
+    <line x1="640" y1="717" x2="780" y2="717" stroke="#1e293b" stroke-width="0.5"/>
+
+    <!-- Dimmed glow -->
+    <circle cx="710" cy="790" r="50" fill="#f0a030" opacity="0.03"/>
+
+    <!-- Python node (dimmed) -->
+    <circle cx="710" cy="790" r="32" fill="url(#gradPython)" opacity="0.5"/>
+    <circle cx="710" cy="790" r="34" fill="none" stroke="#f0a030" stroke-width="1.5" opacity="0.2"/>
+
+    <!-- Warning triangle badge -->
+    <g transform="translate(730, 765)">
+      <polygon points="0,-11 10,7 -10,7" fill="#f59e0b" stroke="#0a0e17" stroke-width="1.5"/>
+      <text x="0" y="4" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-weight="700" fill="#0a0e17">!</text>
+    </g>
+
+    <!-- Label -->
+    <text x="710" y="838" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#94a3b8">boids</text>
+    <!-- Status badge -->
+    <rect x="681" y="845" width="58" height="16" rx="4" fill="#f59e0b" opacity="0.15"/>
+    <text x="710" y="856" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="9" font-weight="500" fill="#f59e0b">Missing</text>
+  </g>
+
+  <!-- Callout: Missing node -->
+  <g class="callout">
+    <circle cx="730" cy="765" r="2" fill="#64748b"/>
+    <line x1="730" y1="765" x2="810" y2="748" stroke="#64748b" stroke-width="0.75"/>
+    <line x1="810" y1="748" x2="830" y2="748" stroke="#64748b" stroke-width="0.75"/>
+    <text x="835" y="741" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Missing node</text>
+    <text x="835" y="756" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" fill="#64748b">Warning badge, dimmed glow</text>
+  </g>
+  <!-- Callout: Warning triangle -->
+  <g class="callout">
+    <circle cx="740" cy="758" r="2" fill="#64748b"/>
+    <line x1="740" y1="758" x2="835" y2="776" stroke="#64748b" stroke-width="0.75"/>
+    <text x="840" y="772" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" font-weight="600" fill="#94a3b8">Warning badge</text>
+    <text x="840" y="787" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" fill="#64748b">Path not found on disk</text>
+  </g>
+
+
+  <!-- ============================================ -->
+  <!-- FOOTER                                       -->
+  <!-- ============================================ -->
+  <line x1="40" y1="882" x2="1400" y2="882" stroke="#1e293b" stroke-width="0.5"/>
+  <text x="40" y="896" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#475569">Engram v0.1  --  Node Anatomy Reference  --  Viewport 1440 x 900</text>
+  <text x="1400" y="896" text-anchor="end" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#475569">Design System Spec</text>
+</svg>

@@ -1,0 +1,401 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <style>
+      .font-body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif; }
+      .font-mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+    </style>
+
+    <!-- Node glow filters -->
+    <filter id="glow-blue" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.231  0 0 0 0 0.510  0 0 0 0 0.965  0 0 0 0.45 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-rust" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.467  0 0 0 0 0.024  0 0 0 0.45 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-python" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.941  0 0 0 0 0.631  0 0 0 0 0.188  0 0 0 0.45 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-swift" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.976  0 0 0 0 0.451  0 0 0 0 0.086  0 0 0 0.45 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-blue-selected" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.231  0 0 0 0 0.510  0 0 0 0 0.965  0 0 0 0.7 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-swift-partial" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.976  0 0 0 0 0.451  0 0 0 0 0.086  0 0 0 0.55 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-supernode" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.890  0 0 0 0 0.545  0 0 0 0 0.110  0 0 0 0.5 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-dim" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.4  0 0 0 0 0.4  0 0 0 0 0.4  0 0 0 0.25 0" result="colored"/>
+      <feMerge><feMergeNode in="colored"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Floating bar shadow -->
+    <filter id="shadow-bar" x="-20%" y="-20%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Cluster radial gradients -->
+    <radialGradient id="cluster-audio-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.07"/>
+      <stop offset="55%" stop-color="#d97706" stop-opacity="0.035"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="cluster-rust-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.065"/>
+      <stop offset="55%" stop-color="#d97706" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="cluster-audio2-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.065"/>
+      <stop offset="55%" stop-color="#f0a030" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Super-node gradient -->
+    <radialGradient id="supernode-grad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#f0a030"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </radialGradient>
+
+    <!-- Badge gradient -->
+    <radialGradient id="badge-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </radialGradient>
+
+    <!-- Subtle grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.015" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- ====== CANVAS ====== -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+  <rect width="1440" height="900" fill="url(#grid)"/>
+
+  <!-- ====== TOP LABEL ====== -->
+  <text x="720" y="32" text-anchor="middle" class="font-body" fill="#64748b" font-size="11" letter-spacing="3" font-weight="500">CLUSTER MANAGEMENT</text>
+
+  <!-- Divider lines -->
+  <line x1="720" y1="55" x2="720" y2="870" stroke="#ffffff" stroke-opacity="0.04" stroke-width="0.5"/>
+  <line x1="30" y1="435" x2="1410" y2="435" stroke="#ffffff" stroke-opacity="0.04" stroke-width="0.5"/>
+
+
+  <!-- ============================================================ -->
+  <!-- TOP-LEFT: SELECTION STATE                                     -->
+  <!-- ============================================================ -->
+
+  <text x="60" y="78" class="font-body" fill="#64748b" font-size="11" letter-spacing="1.5" font-weight="500">SELECTION &amp; CREATION</text>
+
+  <!-- Subtle edge connections between nodes -->
+  <line x1="250" y1="220" x2="420" y2="180" stroke="#3b82f6" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="250" y1="220" x2="350" y2="310" stroke="#3b82f6" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="420" y1="180" x2="350" y2="310" stroke="#3b82f6" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="420" y1="180" x2="500" y2="280" stroke="#f97316" stroke-opacity="0.08" stroke-width="0.8"/>
+  <line x1="350" y1="310" x2="500" y2="280" stroke="#f97316" stroke-opacity="0.08" stroke-width="0.8"/>
+
+  <!-- Selection marquee -->
+  <rect x="200" y="150" width="330" height="200" rx="2" ry="2"
+        fill="#3b82f6" fill-opacity="0.03"
+        stroke="#3b82f6" stroke-opacity="0.5"
+        stroke-width="1.5" stroke-dasharray="6 3"/>
+
+  <!-- Corner handles on marquee -->
+  <rect x="197" y="147" width="6" height="6" rx="1" fill="#3b82f6" fill-opacity="0.6"/>
+  <rect x="527" y="147" width="6" height="6" rx="1" fill="#3b82f6" fill-opacity="0.6"/>
+  <rect x="197" y="347" width="6" height="6" rx="1" fill="#3b82f6" fill-opacity="0.6"/>
+  <rect x="527" y="347" width="6" height="6" rx="1" fill="#3b82f6" fill-opacity="0.6"/>
+
+  <!-- Node: Chatot (selected) -->
+  <g filter="url(#glow-blue-selected)">
+    <circle cx="250" cy="220" r="20" fill="#3b82f6" fill-opacity="0.15"/>
+    <circle cx="250" cy="220" r="20" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-opacity="0.9"/>
+    <circle cx="250" cy="220" r="24" fill="none" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="3 2"/>
+  </g>
+  <text x="250" y="224" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">Chatot</text>
+
+  <!-- Node: aero (selected) -->
+  <g filter="url(#glow-blue-selected)">
+    <circle cx="420" cy="180" r="24" fill="#3b82f6" fill-opacity="0.15"/>
+    <circle cx="420" cy="180" r="24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-opacity="0.9"/>
+    <circle cx="420" cy="180" r="29" fill="none" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="3 2"/>
+  </g>
+  <text x="420" y="184" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="9" font-weight="500">aero</text>
+
+  <!-- Node: chordprog (selected) -->
+  <g filter="url(#glow-blue-selected)">
+    <circle cx="350" cy="310" r="14" fill="#3b82f6" fill-opacity="0.15"/>
+    <circle cx="350" cy="310" r="14" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-opacity="0.9"/>
+    <circle cx="350" cy="310" r="18" fill="none" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="3 2"/>
+  </g>
+  <text x="350" y="313" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7" font-weight="500">chordprog</text>
+
+  <!-- Node: retrolaunch (partially selected) -->
+  <g filter="url(#glow-swift-partial)">
+    <circle cx="500" cy="280" r="16" fill="#f97316" fill-opacity="0.12"/>
+    <circle cx="500" cy="280" r="16" fill="none" stroke="#f97316" stroke-width="1.5" stroke-opacity="0.7"/>
+    <circle cx="500" cy="280" r="20" fill="none" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.25" stroke-dasharray="2 3"/>
+  </g>
+  <text x="500" y="283" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7" font-weight="500">retrolaunch</text>
+
+  <!-- Node labels below -->
+  <text x="250" y="250" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="8">TypeScript</text>
+  <text x="420" y="214" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="8">TypeScript</text>
+  <text x="350" y="334" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="8">TypeScript</text>
+  <text x="500" y="306" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Swift</text>
+
+  <!-- Floating Action Bar -->
+  <g filter="url(#shadow-bar)">
+    <rect x="255" y="368" width="220" height="34" rx="8" fill="#111827" fill-opacity="0.94" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    <!-- Create Group button -->
+    <rect x="263" y="373" width="80" height="24" rx="5" fill="#3b82f6" fill-opacity="0.12"/>
+    <text x="303" y="389" text-anchor="middle" class="font-body" fill="#3b82f6" font-size="10" font-weight="600">Create Group</text>
+    <!-- Tag All button -->
+    <rect x="349" y="373" width="55" height="24" rx="5" fill="#ffffff" fill-opacity="0.03"/>
+    <text x="376" y="389" text-anchor="middle" class="font-body" fill="#e2e8f0" font-size="10" font-weight="500">Tag All</text>
+    <!-- Archive All button -->
+    <rect x="410" y="373" width="58" height="24" rx="5" fill="#ffffff" fill-opacity="0.03"/>
+    <text x="439" y="389" text-anchor="middle" class="font-body" fill="#e2e8f0" font-size="10" font-weight="500">Archive All</text>
+  </g>
+
+
+  <!-- ============================================================ -->
+  <!-- TOP-RIGHT: ACTIVE CLUSTER                                     -->
+  <!-- ============================================================ -->
+
+  <text x="760" y="78" class="font-body" fill="#64748b" font-size="11" letter-spacing="1.5" font-weight="500">ACTIVE CLUSTER</text>
+
+  <!-- Cluster background radial glow -->
+  <ellipse cx="1050" cy="260" rx="185" ry="145" fill="url(#cluster-audio-grad)"/>
+  <ellipse cx="1050" cy="260" rx="185" ry="145" fill="none" stroke="#d97706" stroke-opacity="0.06" stroke-width="0.8"/>
+
+  <!-- Cluster label pill -->
+  <rect x="993" y="126" width="114" height="22" rx="11" fill="#d97706" fill-opacity="0.1" stroke="#d97706" stroke-opacity="0.2" stroke-width="0.8"/>
+  <text x="1050" y="141" text-anchor="middle" class="font-body" fill="#d97706" font-size="11" font-weight="600">Audio Projects</text>
+
+  <!-- Within-cluster edges -->
+  <line x1="980" y1="240" x2="1100" y2="210" stroke="#d97706" stroke-opacity="0.12" stroke-width="0.8"/>
+  <line x1="980" y1="240" x2="1020" y2="330" stroke="#d97706" stroke-opacity="0.12" stroke-width="0.8"/>
+  <line x1="1100" y1="210" x2="1130" y2="310" stroke="#3b82f6" stroke-opacity="0.08" stroke-width="0.8"/>
+  <line x1="1020" y1="330" x2="1130" y2="310" stroke="#f0a030" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="1100" y1="210" x2="1020" y2="330" stroke="#d97706" stroke-opacity="0.1" stroke-width="0.8"/>
+
+  <!-- Node: WaveForge -->
+  <g filter="url(#glow-rust)">
+    <circle cx="980" cy="240" r="26" fill="#d97706" fill-opacity="0.12"/>
+    <circle cx="980" cy="240" r="26" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.7"/>
+  </g>
+  <text x="980" y="244" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8.5" font-weight="500">WaveForge</text>
+  <text x="980" y="276" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Rust</text>
+
+  <!-- Node: WaveForm -->
+  <g filter="url(#glow-rust)">
+    <circle cx="1100" cy="210" r="20" fill="#d97706" fill-opacity="0.12"/>
+    <circle cx="1100" cy="210" r="20" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.7"/>
+  </g>
+  <text x="1100" y="214" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">WaveForm</text>
+  <text x="1100" y="240" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Rust</text>
+
+  <!-- Node: RVC-Portal -->
+  <g filter="url(#glow-python)">
+    <circle cx="1020" cy="330" r="28" fill="#f0a030" fill-opacity="0.1"/>
+    <circle cx="1020" cy="330" r="28" fill="none" stroke="#f0a030" stroke-width="1.5" stroke-opacity="0.65"/>
+  </g>
+  <text x="1020" y="333" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">RVC-Portal</text>
+  <text x="1020" y="368" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Python</text>
+
+  <!-- Node: chordprog (in cluster) -->
+  <g filter="url(#glow-blue)">
+    <circle cx="1130" cy="310" r="14" fill="#3b82f6" fill-opacity="0.12"/>
+    <circle cx="1130" cy="310" r="14" fill="none" stroke="#3b82f6" stroke-width="1.2" stroke-opacity="0.6"/>
+  </g>
+  <text x="1130" y="313" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7" font-weight="500">chordprog</text>
+  <text x="1130" y="334" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">TS</text>
+
+  <!-- Edge from cluster to outside node -->
+  <line x1="1130" y1="310" x2="1250" y2="380" stroke="#94a3b8" stroke-opacity="0.06" stroke-width="0.6"/>
+
+  <!-- Node: Sentinel (outside) -->
+  <g filter="url(#glow-python)">
+    <circle cx="1250" cy="380" r="20" fill="#f0a030" fill-opacity="0.08"/>
+    <circle cx="1250" cy="380" r="20" fill="none" stroke="#f0a030" stroke-width="1.2" stroke-opacity="0.4"/>
+  </g>
+  <text x="1250" y="383" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="8" font-weight="500">Sentinel</text>
+  <text x="1250" y="410" text-anchor="middle" class="font-mono" fill="#64748b" font-size="7">Python</text>
+
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM-LEFT: COLLAPSED CLUSTER                                -->
+  <!-- ============================================================ -->
+
+  <text x="60" y="470" class="font-body" fill="#64748b" font-size="11" letter-spacing="1.5" font-weight="500">COLLAPSED CLUSTER</text>
+
+  <!-- Edges from super-node to nearby nodes -->
+  <line x1="340" y1="630" x2="480" y2="600" stroke="#f0a030" stroke-opacity="0.12" stroke-width="1.2"/>
+  <line x1="340" y1="630" x2="480" y2="600" stroke="#f0a030" stroke-opacity="0.04" stroke-width="3"/>
+  <line x1="270" y1="680" x2="200" y2="760" stroke="#64748b" stroke-opacity="0.08" stroke-width="0.8"/>
+
+  <!-- Super-node outer glow -->
+  <g filter="url(#glow-supernode)">
+    <circle cx="300" cy="650" r="45" fill="url(#supernode-grad)" fill-opacity="0.2"/>
+    <circle cx="300" cy="650" r="45" fill="none" stroke="#d97706" stroke-width="2" stroke-opacity="0.5"/>
+  </g>
+
+  <!-- Inner rings to show complexity -->
+  <circle cx="300" cy="650" r="38" fill="none" stroke="#f0a030" stroke-width="0.5" stroke-opacity="0.2"/>
+  <circle cx="300" cy="650" r="30" fill="none" stroke="#d97706" stroke-width="0.3" stroke-opacity="0.15"/>
+
+  <!-- Tiny representative dots inside super-node -->
+  <circle cx="287" cy="640" r="3.5" fill="#d97706" fill-opacity="0.5"/>
+  <circle cx="313" cy="642" r="3" fill="#d97706" fill-opacity="0.4"/>
+  <circle cx="296" cy="658" r="4" fill="#f0a030" fill-opacity="0.45"/>
+  <circle cx="310" cy="655" r="2.5" fill="#3b82f6" fill-opacity="0.35"/>
+
+  <!-- Super-node label -->
+  <text x="300" y="636" text-anchor="middle" class="font-body" fill="#e2e8f0" font-size="11" font-weight="600">Audio</text>
+  <text x="300" y="670" text-anchor="middle" class="font-body" fill="#94a3b8" font-size="7.5" font-weight="400">Projects</text>
+
+  <!-- Count badge -->
+  <circle cx="335" cy="615" r="11" fill="#111827" stroke="#d97706" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="335" y="619" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="9" font-weight="600">4</text>
+
+  <!-- Expand icon at bottom -->
+  <g transform="translate(300, 692)" opacity="0.5">
+    <circle r="8" fill="#111827" stroke="#94a3b8" stroke-width="0.8" stroke-opacity="0.4"/>
+    <!-- Expand arrows -->
+    <line x1="-3" y1="0" x2="-1" y2="-2.5" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/>
+    <line x1="-3" y1="0" x2="-1" y2="2.5" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/>
+    <line x1="3" y1="0" x2="1" y2="-2.5" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/>
+    <line x1="3" y1="0" x2="1" y2="2.5" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/>
+    <line x1="-3.5" y1="0" x2="3.5" y2="0" stroke="#94a3b8" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 2"/>
+  </g>
+
+  <!-- Node: Sentinel (nearby) -->
+  <g filter="url(#glow-python)">
+    <circle cx="480" cy="600" r="20" fill="#f0a030" fill-opacity="0.1"/>
+    <circle cx="480" cy="600" r="20" fill="none" stroke="#f0a030" stroke-width="1.2" stroke-opacity="0.5"/>
+  </g>
+  <text x="480" y="604" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">Sentinel</text>
+  <text x="480" y="630" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Python</text>
+
+  <!-- Node: dino (small, dim) -->
+  <g filter="url(#glow-dim)">
+    <circle cx="200" cy="760" r="12" fill="#64748b" fill-opacity="0.06"/>
+    <circle cx="200" cy="760" r="12" fill="none" stroke="#64748b" stroke-width="1" stroke-opacity="0.3"/>
+  </g>
+  <text x="200" y="763" text-anchor="middle" class="font-mono" fill="#64748b" font-size="7" font-weight="500">dino</text>
+
+  <!-- Annotation callout -->
+  <g>
+    <!-- Leader line -->
+    <path d="M 370 710 L 420 730 L 540 730" fill="none" stroke="#64748b" stroke-width="0.8" stroke-opacity="0.4"/>
+    <circle cx="370" cy="710" r="2" fill="#64748b" fill-opacity="0.5"/>
+    <text x="548" y="734" class="font-body" fill="#64748b" font-size="10" font-style="italic">Collapsed super-node -- click to expand</text>
+  </g>
+
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM-RIGHT: OVERLAPPING CLUSTERS                            -->
+  <!-- ============================================================ -->
+
+  <text x="760" y="470" class="font-body" fill="#64748b" font-size="11" letter-spacing="1.5" font-weight="500">OVERLAPPING CLUSTERS</text>
+
+  <!-- Cluster A: Rust -->
+  <ellipse cx="1000" cy="640" rx="155" ry="125" fill="url(#cluster-rust-grad)"/>
+  <ellipse cx="1000" cy="640" rx="155" ry="125" fill="none" stroke="#d97706" stroke-opacity="0.05" stroke-width="0.8"/>
+
+  <!-- Cluster B: Audio Projects -->
+  <ellipse cx="1150" cy="680" rx="165" ry="135" fill="url(#cluster-audio2-grad)"/>
+  <ellipse cx="1150" cy="680" rx="165" ry="135" fill="none" stroke="#f0a030" stroke-opacity="0.05" stroke-width="0.8"/>
+
+  <!-- Cluster A label -->
+  <rect x="963" y="506" width="74" height="20" rx="10" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.15" stroke-width="0.7"/>
+  <text x="1000" y="520" text-anchor="middle" class="font-body" fill="#d97706" font-size="10" font-weight="600">Rust</text>
+
+  <!-- Cluster B label -->
+  <rect x="1093" y="536" width="114" height="20" rx="10" fill="#f0a030" fill-opacity="0.08" stroke="#f0a030" stroke-opacity="0.15" stroke-width="0.7"/>
+  <text x="1150" y="550" text-anchor="middle" class="font-body" fill="#f0a030" font-size="10" font-weight="600">Audio Projects</text>
+
+  <!-- Edges within clusters -->
+  <line x1="980" y1="620" x2="920" y2="720" stroke="#d97706" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="980" y1="620" x2="1080" y2="650" stroke="#d97706" stroke-opacity="0.12" stroke-width="0.8"/>
+  <line x1="1080" y1="650" x2="1180" y2="620" stroke="#f0a030" stroke-opacity="0.1" stroke-width="0.8"/>
+  <line x1="1180" y1="620" x2="1230" y2="730" stroke="#f0a030" stroke-opacity="0.08" stroke-width="0.8"/>
+  <line x1="1080" y1="650" x2="1230" y2="730" stroke="#3b82f6" stroke-opacity="0.06" stroke-width="0.8"/>
+  <line x1="920" y1="720" x2="1080" y2="650" stroke="#d97706" stroke-opacity="0.08" stroke-width="0.6"/>
+
+  <!-- Node: WaveForge (Rust cluster only) -->
+  <g filter="url(#glow-rust)">
+    <circle cx="980" cy="620" r="24" fill="#d97706" fill-opacity="0.12"/>
+    <circle cx="980" cy="620" r="24" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.65"/>
+  </g>
+  <text x="980" y="624" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">WaveForge</text>
+  <text x="980" y="654" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Rust</text>
+
+  <!-- Node: Oxide (Rust cluster only) -->
+  <g filter="url(#glow-rust)">
+    <circle cx="920" cy="720" r="18" fill="#d97706" fill-opacity="0.1"/>
+    <circle cx="920" cy="720" r="18" fill="none" stroke="#d97706" stroke-width="1.3" stroke-opacity="0.55"/>
+  </g>
+  <text x="920" y="724" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7.5" font-weight="500">Oxide</text>
+  <text x="920" y="748" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Rust</text>
+
+  <!-- Node: WaveForm (overlap zone - BOTH clusters) -->
+  <g filter="url(#glow-rust)">
+    <circle cx="1080" cy="650" r="20" fill="#d97706" fill-opacity="0.14"/>
+    <circle cx="1080" cy="650" r="20" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.7"/>
+    <!-- Double ring to indicate dual membership -->
+    <circle cx="1080" cy="650" r="25" fill="none" stroke="#f0a030" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="4 3"/>
+  </g>
+  <text x="1080" y="654" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7.5" font-weight="500">WaveForm</text>
+  <text x="1080" y="683" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Rust</text>
+
+  <!-- Node: RVC-Portal (Audio cluster only) -->
+  <g filter="url(#glow-python)">
+    <circle cx="1180" cy="620" r="26" fill="#f0a030" fill-opacity="0.1"/>
+    <circle cx="1180" cy="620" r="26" fill="none" stroke="#f0a030" stroke-width="1.5" stroke-opacity="0.6"/>
+  </g>
+  <text x="1180" y="624" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="8" font-weight="500">RVC-Portal</text>
+  <text x="1180" y="656" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">Python</text>
+
+  <!-- Node: chordprog (Audio cluster only) -->
+  <g filter="url(#glow-blue)">
+    <circle cx="1230" cy="730" r="14" fill="#3b82f6" fill-opacity="0.1"/>
+    <circle cx="1230" cy="730" r="14" fill="none" stroke="#3b82f6" stroke-width="1.2" stroke-opacity="0.55"/>
+  </g>
+  <text x="1230" y="733" text-anchor="middle" class="font-mono" fill="#e2e8f0" font-size="7" font-weight="500">chordprog</text>
+  <text x="1230" y="754" text-anchor="middle" class="font-mono" fill="#94a3b8" font-size="7">TS</text>
+
+  <!-- Annotation callout for overlap -->
+  <g>
+    <path d="M 1080 620 L 1080 570 L 1120 570" fill="none" stroke="#64748b" stroke-width="0.8" stroke-opacity="0.4"/>
+    <circle cx="1080" cy="620" r="2" fill="#64748b" fill-opacity="0.5"/>
+    <text x="1125" y="574" class="font-body" fill="#64748b" font-size="10" font-style="italic">Node belongs to both clusters</text>
+  </g>
+
+  <!-- Subtle overlap indicator - small Venn label -->
+  <text x="1075" y="770" text-anchor="middle" class="font-body" fill="#64748b" font-size="8" fill-opacity="0.5">overlap zone</text>
+  <line x1="1040" y1="773" x2="1110" y2="773" stroke="#64748b" stroke-opacity="0.15" stroke-width="0.5"/>
+
+</svg>

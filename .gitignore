@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Rust build output
+src-tauri/target/
+
+# Generated schemas
+src-tauri/gen/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Sidecar binaries (built separately)
+src-tauri/binaries/engram-sidecar-*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+sidecar/*.egg-info/
+sidecar/.venv/

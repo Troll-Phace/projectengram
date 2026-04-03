@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <!-- Glow filters -->
+    <filter id="ghostGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feComposite in="blur" in2="SourceGraphic" operator="over"/>
+    </filter>
+    <filter id="pulseGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feComposite in="blur" in2="SourceGraphic" operator="over"/>
+    </filter>
+    <filter id="ctaGlow" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14" result="blur"/>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.19" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.45" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softNodeGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+      <feComposite in="blur" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <!-- CTA button gradient -->
+    <linearGradient id="ctaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <!-- Subtle radial vignette for canvas depth -->
+    <radialGradient id="vignette" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#0a0e17" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#050810" stop-opacity="0.6"/>
+    </radialGradient>
+
+    <!-- Pulse animation rings -->
+    <filter id="pulseRingGlow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <!-- ============================================ -->
+  <!-- CANVAS BACKGROUND                            -->
+  <!-- ============================================ -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+  <rect width="1440" height="900" fill="url(#vignette)"/>
+
+  <!-- ============================================ -->
+  <!-- GHOST EDGES (behind nodes)                   -->
+  <!-- Faint bezier curves, opacity 0.03-0.05       -->
+  <!-- ============================================ -->
+
+  <!-- Edge: top-left cluster -->
+  <path d="M 180,160 C 230,200 280,180 340,240" fill="none" stroke="#d97706" stroke-width="0.8" opacity="0.04"/>
+  <path d="M 340,240 C 380,290 350,340 310,380" fill="none" stroke="#3b82f6" stroke-width="0.7" opacity="0.035"/>
+
+  <!-- Edge: top-right area -->
+  <path d="M 1080,130 C 1120,180 1180,160 1240,200" fill="none" stroke="#06b6d4" stroke-width="0.9" opacity="0.04"/>
+  <path d="M 1240,200 C 1270,260 1300,240 1340,300" fill="none" stroke="#f0a030" stroke-width="0.7" opacity="0.03"/>
+
+  <!-- Edge: bottom-left -->
+  <path d="M 120,620 C 180,580 220,640 290,660" fill="none" stroke="#f97316" stroke-width="0.8" opacity="0.045"/>
+
+  <!-- Edge: bottom-right -->
+  <path d="M 1100,680 C 1140,640 1200,660 1280,620" fill="none" stroke="#3b82f6" stroke-width="0.7" opacity="0.035"/>
+  <path d="M 1280,620 C 1320,660 1350,700 1380,740" fill="none" stroke="#d97706" stroke-width="0.6" opacity="0.03"/>
+
+  <!-- Edge: mid-left -->
+  <path d="M 90,400 C 140,360 170,420 180,160" fill="none" stroke="#06b6d4" stroke-width="0.6" opacity="0.035"/>
+
+  <!-- Edge: spanning -->
+  <path d="M 310,380 C 360,430 380,500 290,660" fill="none" stroke="#f0a030" stroke-width="0.5" opacity="0.03"/>
+
+  <!-- Edge: top spanning -->
+  <path d="M 560,90 C 650,120 750,80 860,110" fill="none" stroke="#3b82f6" stroke-width="0.6" opacity="0.03"/>
+
+  <!-- ============================================ -->
+  <!-- GHOST NODES                                  -->
+  <!-- Faint circles, opacity 0.04-0.07             -->
+  <!-- ============================================ -->
+
+  <!-- Node 1: Rust, top-left, r=22 -->
+  <circle cx="180" cy="160" r="22" fill="#d97706" opacity="0.055" filter="url(#ghostGlow)"/>
+
+  <!-- Node 2: TypeScript, mid-left, r=16 -->
+  <circle cx="340" cy="240" r="16" fill="#3b82f6" opacity="0.05" filter="url(#ghostGlow)"/>
+
+  <!-- Node 3: Python, bottom-of-left-cluster, r=12 -->
+  <circle cx="310" cy="380" r="12" fill="#f0a030" opacity="0.04" filter="url(#ghostGlow)"/>
+
+  <!-- Node 4: Go, far-left, r=10 -->
+  <circle cx="90" cy="400" r="10" fill="#06b6d4" opacity="0.06" filter="url(#ghostGlow)"/>
+
+  <!-- Node 5: Swift, bottom-left, r=26 — has pulse -->
+  <circle cx="120" cy="620" r="36" fill="#f97316" opacity="0.025" filter="url(#pulseRingGlow)"/>
+  <circle cx="120" cy="620" r="26" fill="#f97316" opacity="0.06" filter="url(#softNodeGlow)"/>
+
+  <!-- Node 6: Python, bottom-left-inner, r=9 -->
+  <circle cx="290" cy="660" r="9" fill="#f0a030" opacity="0.05" filter="url(#ghostGlow)"/>
+
+  <!-- Node 7: TypeScript, top-center-left, r=14 -->
+  <circle cx="560" cy="90" r="14" fill="#3b82f6" opacity="0.045" filter="url(#ghostGlow)"/>
+
+  <!-- Node 8: Rust, top-center-right, r=8 -->
+  <circle cx="860" cy="110" r="8" fill="#d97706" opacity="0.04" filter="url(#ghostGlow)"/>
+
+  <!-- Node 9: Go, top-right, r=18 -->
+  <circle cx="1080" cy="130" r="18" fill="#06b6d4" opacity="0.055" filter="url(#ghostGlow)"/>
+
+  <!-- Node 10: Python, right, r=28 — has pulse -->
+  <circle cx="1240" cy="200" r="40" fill="#f0a030" opacity="0.02" filter="url(#pulseRingGlow)"/>
+  <circle cx="1240" cy="200" r="28" fill="#f0a030" opacity="0.055" filter="url(#softNodeGlow)"/>
+
+  <!-- Node 11: Rust, far-right, r=10 -->
+  <circle cx="1340" cy="300" r="10" fill="#d97706" opacity="0.04" filter="url(#ghostGlow)"/>
+
+  <!-- Node 12: TypeScript, bottom-right, r=20 -->
+  <circle cx="1100" cy="680" r="20" fill="#3b82f6" opacity="0.05" filter="url(#ghostGlow)"/>
+
+  <!-- Node 13: Swift, bottom-far-right, r=14 -->
+  <circle cx="1280" cy="620" r="14" fill="#f97316" opacity="0.045" filter="url(#ghostGlow)"/>
+
+  <!-- Node 14: Go, far-bottom-right, r=12 -->
+  <circle cx="1380" cy="740" r="12" fill="#06b6d4" opacity="0.05" filter="url(#ghostGlow)"/>
+
+  <!-- Node 15: Python, bottom-center, r=30 -->
+  <circle cx="700" cy="810" r="30" fill="#f0a030" opacity="0.04" filter="url(#ghostGlow)"/>
+
+  <!-- ============================================ -->
+  <!-- PARTICLE FIELD                               -->
+  <!-- Tiny dots scattered, opacity 0.08-0.15       -->
+  <!-- ============================================ -->
+
+  <circle cx="68" cy="88" r="1.2" fill="#d97706" opacity="0.12"/>
+  <circle cx="245" cy="55" r="1.0" fill="#3b82f6" opacity="0.09"/>
+  <circle cx="410" cy="170" r="1.5" fill="#06b6d4" opacity="0.11"/>
+  <circle cx="520" cy="210" r="1.0" fill="#f0a030" opacity="0.08"/>
+  <circle cx="155" cy="300" r="1.3" fill="#f97316" opacity="0.10"/>
+  <circle cx="380" cy="480" r="1.1" fill="#3b82f6" opacity="0.13"/>
+  <circle cx="210" cy="540" r="1.4" fill="#d97706" opacity="0.09"/>
+  <circle cx="450" cy="720" r="1.0" fill="#06b6d4" opacity="0.11"/>
+  <circle cx="60" cy="780" r="1.2" fill="#f0a030" opacity="0.08"/>
+  <circle cx="640" cy="160" r="1.5" fill="#f97316" opacity="0.10"/>
+  <circle cx="780" cy="60" r="1.0" fill="#3b82f6" opacity="0.14"/>
+  <circle cx="960" cy="200" r="1.3" fill="#d97706" opacity="0.09"/>
+  <circle cx="1020" cy="50" r="1.1" fill="#06b6d4" opacity="0.12"/>
+  <circle cx="1180" cy="90" r="1.0" fill="#f0a030" opacity="0.10"/>
+  <circle cx="1360" cy="160" r="1.4" fill="#3b82f6" opacity="0.08"/>
+  <circle cx="1400" cy="420" r="1.2" fill="#f97316" opacity="0.11"/>
+  <circle cx="1300" cy="500" r="1.0" fill="#d97706" opacity="0.13"/>
+  <circle cx="1180" cy="560" r="1.5" fill="#06b6d4" opacity="0.09"/>
+  <circle cx="1050" cy="780" r="1.1" fill="#f0a030" opacity="0.12"/>
+  <circle cx="900" cy="840" r="1.3" fill="#3b82f6" opacity="0.08"/>
+  <circle cx="530" cy="830" r="1.0" fill="#f97316" opacity="0.15"/>
+  <circle cx="340" cy="810" r="1.2" fill="#d97706" opacity="0.10"/>
+  <circle cx="1420" cy="850" r="1.4" fill="#06b6d4" opacity="0.09"/>
+  <circle cx="48" cy="500" r="1.0" fill="#3b82f6" opacity="0.11"/>
+  <circle cx="750" cy="780" r="1.5" fill="#f0a030" opacity="0.08"/>
+  <circle cx="1150" cy="400" r="1.1" fill="#f97316" opacity="0.13"/>
+  <circle cx="960" cy="720" r="1.0" fill="#d97706" opacity="0.10"/>
+  <circle cx="680" cy="40" r="1.3" fill="#06b6d4" opacity="0.09"/>
+  <circle cx="1060" cy="380" r="1.2" fill="#3b82f6" opacity="0.11"/>
+  <circle cx="200" cy="730" r="1.0" fill="#f0a030" opacity="0.14"/>
+
+  <!-- ============================================ -->
+  <!-- macOS TITLE BAR                              -->
+  <!-- ============================================ -->
+
+  <!-- Title bar background (very subtle) -->
+  <rect x="0" y="0" width="1440" height="36" fill="#0a0e17" opacity="0.5"/>
+  <line x1="0" y1="36" x2="1440" y2="36" stroke="#ffffff" stroke-width="0.5" opacity="0.04"/>
+
+  <!-- Traffic lights -->
+  <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="18" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="18" r="6" fill="#28c840"/>
+
+  <!-- Title bar text -->
+  <text x="720" y="22" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="11" fill="#64748b" font-weight="400">Engram</text>
+
+  <!-- ============================================ -->
+  <!-- CENTERED ONBOARDING CARD                     -->
+  <!-- ============================================ -->
+
+  <!-- Card shadow + background -->
+  <g filter="url(#cardShadow)">
+    <rect x="480" y="270" width="480" height="360" rx="16" ry="16" fill="#111827" fill-opacity="0.94"/>
+  </g>
+  <!-- Card border -->
+  <rect x="480" y="270" width="480" height="360" rx="16" ry="16" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- ===== ROW 1: Wordmark ===== -->
+  <text x="720" y="326" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="28" font-weight="300" letter-spacing="0.2em" fill="#e2e8f0">ENGRAM</text>
+
+  <!-- Decorative neural glyph: 3 connected dots in triangle -->
+  <g opacity="0.6">
+    <line x1="706" y1="344" x2="720" y2="338" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+    <line x1="720" y1="338" x2="734" y2="344" stroke="#06b6d4" stroke-width="1" opacity="0.5"/>
+    <line x1="734" y1="344" x2="706" y2="344" stroke="#d97706" stroke-width="1" opacity="0.4"/>
+    <circle cx="706" cy="344" r="2.5" fill="#3b82f6" opacity="0.7"/>
+    <circle cx="720" cy="338" r="2.5" fill="#06b6d4" opacity="0.7"/>
+    <circle cx="734" cy="344" r="2.5" fill="#d97706" opacity="0.7"/>
+  </g>
+
+  <!-- ===== ROW 2: Tagline ===== -->
+  <text x="720" y="378" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="16" fill="#94a3b8" font-weight="400" letter-spacing="0.01em">Your projects, connected.</text>
+
+  <!-- ===== ROW 3: Description ===== -->
+  <text x="720" y="410" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="13" fill="#64748b" font-weight="400">
+    <tspan x="720" dy="0">Engram maps your coding projects as a living neural</tspan>
+    <tspan x="720" dy="21">network -- visualizing connections, tracking progress,</tspan>
+    <tspan x="720" dy="21">and making your work feel alive.</tspan>
+  </text>
+
+  <!-- ===== ROW 4: Primary CTA Button ===== -->
+  <g filter="url(#ctaGlow)">
+    <rect x="600" y="476" width="240" height="48" rx="12" ry="12" fill="url(#ctaGrad)"/>
+  </g>
+  <text x="720" y="505" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="14" fill="#ffffff" font-weight="500" letter-spacing="0.02em">Choose Projects Folder</text>
+
+  <!-- ===== ROW 5: Helper text ===== -->
+  <text x="720" y="548" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="11" fill="#64748b" font-weight="400">Engram will scan your folder and build your graph.</text>
+
+  <!-- ===== ROW 6: Secondary drop option ===== -->
+  <g opacity="0.7">
+    <rect x="635" y="564" width="170" height="28" rx="8" ry="8" fill="none" stroke="#64748b" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.35"/>
+    <text x="720" y="583" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', sans-serif" font-size="11" fill="#64748b" font-weight="400">or drop a folder here</text>
+  </g>
+
+</svg>

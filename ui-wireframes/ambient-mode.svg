@@ -1,0 +1,490 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <!-- ============================================ -->
+    <!-- FILTERS: Multi-layer glow system             -->
+    <!-- ============================================ -->
+
+    <!-- Tight inner glow for node cores -->
+    <filter id="glowTight" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur6"/>
+      <feComposite in="blur6" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <!-- Medium bloom halo -->
+    <filter id="glowMedium" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur15"/>
+      <feComposite in="blur15" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <!-- Wide atmospheric bloom -->
+    <filter id="glowWide" x="-300%" y="-300%" width="700%" height="700%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="25"/>
+    </filter>
+
+    <!-- Ultra-wide bloom for the brightest nodes -->
+    <filter id="glowUltra" x="-400%" y="-400%" width="900%" height="900%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="40"/>
+    </filter>
+
+    <!-- Edge glow -->
+    <filter id="edgeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+    </filter>
+
+    <!-- Soft particle glow -->
+    <filter id="particleGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+    </filter>
+
+    <!-- ============================================ -->
+    <!-- VIGNETTE: Radial gradient overlay            -->
+    <!-- ============================================ -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="55%" fx="50%" fy="48%">
+      <stop offset="0%" stop-color="#060a12" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#060a12" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#060a12" stop-opacity="0.35"/>
+      <stop offset="85%" stop-color="#060a12" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#060a12" stop-opacity="0.88"/>
+    </radialGradient>
+
+    <!-- ============================================ -->
+    <!-- CLUSTER NEBULAE gradients                    -->
+    <!-- ============================================ -->
+
+    <!-- Rust cluster nebula — centered around Rust nodes -->
+    <radialGradient id="nebulaRust" cx="500" cy="380" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.06"/>
+      <stop offset="40%" stop-color="#d97706" stop-opacity="0.035"/>
+      <stop offset="70%" stop-color="#d97706" stop-opacity="0.015"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- TypeScript/Web cluster nebula -->
+    <radialGradient id="nebulaWeb" cx="960" cy="340" r="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.055"/>
+      <stop offset="40%" stop-color="#3b82f6" stop-opacity="0.03"/>
+      <stop offset="70%" stop-color="#3b82f6" stop-opacity="0.012"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Python cluster nebula -->
+    <radialGradient id="nebulaPython" cx="680" cy="580" r="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.045"/>
+      <stop offset="40%" stop-color="#f0a030" stop-opacity="0.025"/>
+      <stop offset="70%" stop-color="#f0a030" stop-opacity="0.01"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- ============================================ -->
+    <!-- EDGE GRADIENTS: Fade from node to mid-path   -->
+    <!-- ============================================ -->
+
+    <!-- WaveForge (520,340) ↔ WaveForm (680,260) -->
+    <linearGradient id="edgeWaveForgeWaveForm" x1="520" y1="340" x2="680" y2="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.6"/>
+      <stop offset="45%" stop-color="#d97706" stop-opacity="0.15"/>
+      <stop offset="55%" stop-color="#d97706" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- WaveForge (520,340) ↔ RVC-Portal (620,520) -->
+    <linearGradient id="edgeWaveForgeRVC" x1="520" y1="340" x2="620" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.5"/>
+      <stop offset="40%" stop-color="#f0a030" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#f0a030" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- Chatot (860,300) ↔ aero (1060,240) -->
+    <linearGradient id="edgeChatotAero" x1="860" y1="300" x2="1060" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#3b82f6" stop-opacity="0.13"/>
+      <stop offset="55%" stop-color="#3b82f6" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.55"/>
+    </linearGradient>
+
+    <!-- Chatot (860,300) ↔ chordprog (940,460) -->
+    <linearGradient id="edgeChatotChord" x1="860" y1="300" x2="940" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.5"/>
+      <stop offset="45%" stop-color="#3b82f6" stop-opacity="0.1"/>
+      <stop offset="55%" stop-color="#3b82f6" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- RVC-Portal (620,520) ↔ Sentinel (1000,560) -->
+    <linearGradient id="edgeRVCSentinel" x1="620" y1="520" x2="1000" y2="560" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.5"/>
+      <stop offset="45%" stop-color="#f0a030" stop-opacity="0.1"/>
+      <stop offset="55%" stop-color="#f0a030" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- Oxide (380,420) ↔ WaveForge (520,340) -->
+    <linearGradient id="edgeOxideWaveForge" x1="380" y1="420" x2="520" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#d97706" stop-opacity="0.1"/>
+      <stop offset="55%" stop-color="#d97706" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.45"/>
+    </linearGradient>
+
+    <!-- boids (440,620) ↔ dino (500,680) -->
+    <linearGradient id="edgeBoidsDino" x1="440" y1="620" x2="500" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#eab308" stop-opacity="0.25"/>
+      <stop offset="45%" stop-color="#eab308" stop-opacity="0.06"/>
+      <stop offset="55%" stop-color="#eab308" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#eab308" stop-opacity="0.25"/>
+    </linearGradient>
+
+  </defs>
+
+  <!-- ============================================ -->
+  <!-- LAYER 0: Deep canvas background              -->
+  <!-- ============================================ -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+
+  <!-- ============================================ -->
+  <!-- LAYER 1: Vignette background                 -->
+  <!-- ============================================ -->
+  <rect width="1440" height="900" fill="url(#vignette)"/>
+
+  <!-- ============================================ -->
+  <!-- LAYER 2: Cluster Nebulae                     -->
+  <!-- ============================================ -->
+  <rect width="1440" height="900" fill="url(#nebulaRust)"/>
+  <rect width="1440" height="900" fill="url(#nebulaWeb)"/>
+  <rect width="1440" height="900" fill="url(#nebulaPython)"/>
+
+  <!-- ============================================ -->
+  <!-- LAYER 3: Edge paths (glowed underlayer)      -->
+  <!-- ============================================ -->
+  <g filter="url(#edgeGlow)" opacity="0.5">
+    <!-- WaveForge ↔ WaveForm -->
+    <path d="M520,340 C570,290 630,270 680,260" fill="none" stroke="url(#edgeWaveForgeWaveForm)" stroke-width="2" stroke-linecap="round"/>
+    <!-- WaveForge ↔ RVC-Portal -->
+    <path d="M520,340 C540,410 580,470 620,520" fill="none" stroke="url(#edgeWaveForgeRVC)" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Chatot ↔ aero -->
+    <path d="M860,300 C920,275 990,255 1060,240" fill="none" stroke="url(#edgeChatotAero)" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Chatot ↔ chordprog -->
+    <path d="M860,300 C875,355 905,410 940,460" fill="none" stroke="url(#edgeChatotChord)" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- RVC-Portal ↔ Sentinel -->
+    <path d="M620,520 C730,530 860,545 1000,560" fill="none" stroke="url(#edgeRVCSentinel)" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Oxide ↔ WaveForge -->
+    <path d="M380,420 C420,395 470,365 520,340" fill="none" stroke="url(#edgeOxideWaveForge)" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- boids ↔ dino -->
+    <path d="M440,620 C455,640 475,660 500,680" fill="none" stroke="url(#edgeBoidsDino)" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Edge paths — crisp layer on top of glow -->
+  <g opacity="0.7">
+    <path d="M520,340 C570,290 630,270 680,260" fill="none" stroke="url(#edgeWaveForgeWaveForm)" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M520,340 C540,410 580,470 620,520" fill="none" stroke="url(#edgeWaveForgeRVC)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M860,300 C920,275 990,255 1060,240" fill="none" stroke="url(#edgeChatotAero)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M860,300 C875,355 905,410 940,460" fill="none" stroke="url(#edgeChatotChord)" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M620,520 C730,530 860,545 1000,560" fill="none" stroke="url(#edgeRVCSentinel)" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M380,420 C420,395 470,365 520,340" fill="none" stroke="url(#edgeOxideWaveForge)" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M440,620 C455,640 475,660 500,680" fill="none" stroke="url(#edgeBoidsDino)" stroke-width="1" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 4: Ambient floating particles          -->
+  <!-- (starfield / neural dust)                    -->
+  <!-- ============================================ -->
+  <g>
+    <!-- Near Rust cluster -->
+    <circle cx="462" cy="308" r="1.2" fill="#d97706" opacity="0.18"/>
+    <circle cx="548" cy="392" r="1" fill="#d97706" opacity="0.12"/>
+    <circle cx="415" cy="358" r="1.5" fill="#d97706" opacity="0.15"/>
+    <circle cx="592" cy="285" r="0.8" fill="#d97706" opacity="0.22"/>
+    <circle cx="350" cy="380" r="1" fill="#d97706" opacity="0.1"/>
+    <circle cx="630" cy="310" r="1.3" fill="#d97706" opacity="0.14"/>
+    <circle cx="490" cy="275" r="0.9" fill="#d97706" opacity="0.2"/>
+
+    <!-- Near TypeScript cluster -->
+    <circle cx="920" cy="280" r="1.1" fill="#3b82f6" opacity="0.16"/>
+    <circle cx="1010" cy="310" r="1.4" fill="#3b82f6" opacity="0.13"/>
+    <circle cx="880" cy="380" r="0.8" fill="#3b82f6" opacity="0.19"/>
+    <circle cx="1100" cy="290" r="1" fill="#3b82f6" opacity="0.11"/>
+    <circle cx="975" cy="420" r="1.2" fill="#3b82f6" opacity="0.15"/>
+    <circle cx="840" cy="240" r="0.9" fill="#3b82f6" opacity="0.21"/>
+
+    <!-- Near Python cluster -->
+    <circle cx="660" cy="580" r="1.3" fill="#f0a030" opacity="0.14"/>
+    <circle cx="570" cy="550" r="1" fill="#f0a030" opacity="0.18"/>
+    <circle cx="720" cy="490" r="0.8" fill="#f0a030" opacity="0.12"/>
+    <circle cx="480" cy="600" r="1.1" fill="#f0a030" opacity="0.16"/>
+    <circle cx="950" cy="520" r="0.9" fill="#f0a030" opacity="0.13"/>
+
+    <!-- Scattered across canvas — outer regions -->
+    <circle cx="180" cy="200" r="1" fill="#94a3b8" opacity="0.1"/>
+    <circle cx="1300" cy="150" r="1.2" fill="#22c55e" opacity="0.12"/>
+    <circle cx="120" cy="650" r="0.8" fill="#06b6d4" opacity="0.08"/>
+    <circle cx="1350" cy="720" r="1.1" fill="#eab308" opacity="0.1"/>
+    <circle cx="250" cy="480" r="0.9" fill="#f97316" opacity="0.11"/>
+    <circle cx="1250" cy="400" r="1" fill="#3b82f6" opacity="0.09"/>
+    <circle cx="720" cy="120" r="1.3" fill="#d97706" opacity="0.1"/>
+    <circle cx="300" cy="150" r="0.7" fill="#22c55e" opacity="0.13"/>
+    <circle cx="1100" cy="700" r="1" fill="#f0a030" opacity="0.08"/>
+    <circle cx="200" cy="780" r="1.2" fill="#94a3b8" opacity="0.07"/>
+    <circle cx="1320" cy="550" r="0.8" fill="#06b6d4" opacity="0.1"/>
+    <circle cx="80" cy="420" r="1" fill="#eab308" opacity="0.09"/>
+    <circle cx="1180" cy="130" r="0.9" fill="#f97316" opacity="0.11"/>
+    <circle cx="700" cy="780" r="1.1" fill="#22c55e" opacity="0.08"/>
+    <circle cx="340" cy="710" r="0.8" fill="#3b82f6" opacity="0.1"/>
+    <circle cx="1050" cy="680" r="1" fill="#d97706" opacity="0.09"/>
+    <circle cx="160" cy="320" r="0.7" fill="#f0a030" opacity="0.12"/>
+    <circle cx="1280" cy="280" r="1.1" fill="#94a3b8" opacity="0.08"/>
+    <circle cx="580" cy="140" r="0.9" fill="#eab308" opacity="0.11"/>
+    <circle cx="890" cy="700" r="1.2" fill="#06b6d4" opacity="0.07"/>
+    <circle cx="430" cy="160" r="1" fill="#3b82f6" opacity="0.1"/>
+    <circle cx="1150" cy="480" r="0.8" fill="#22c55e" opacity="0.09"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 5: Edge particles (the visual pulse)   -->
+  <!-- ============================================ -->
+
+  <!-- WaveForge (520,340) ↔ WaveForm (680,260): 7 particles along bezier -->
+  <g filter="url(#particleGlow)">
+    <circle cx="533" cy="327" r="2.5" fill="#d97706" opacity="0.85"/>
+    <circle cx="549" cy="313" r="2" fill="#d97706" opacity="0.7"/>
+    <circle cx="568" cy="299" r="3" fill="#d97706" opacity="0.55"/>
+    <circle cx="590" cy="287" r="2.2" fill="#d97706" opacity="0.9"/>
+    <circle cx="615" cy="276" r="2.5" fill="#d97706" opacity="0.4"/>
+    <circle cx="640" cy="269" r="2" fill="#d97706" opacity="0.75"/>
+    <circle cx="662" cy="263" r="2.8" fill="#d97706" opacity="0.6"/>
+  </g>
+
+  <!-- WaveForge (520,340) ↔ RVC-Portal (620,520): 5 particles -->
+  <g filter="url(#particleGlow)">
+    <circle cx="530" cy="368" r="2.2" fill="#f0a030" opacity="0.8"/>
+    <circle cx="545" cy="402" r="2.5" fill="#f0a030" opacity="0.55"/>
+    <circle cx="562" cy="438" r="2" fill="#f0a030" opacity="0.9"/>
+    <circle cx="583" cy="472" r="2.8" fill="#f0a030" opacity="0.4"/>
+    <circle cx="605" cy="500" r="2.3" fill="#f0a030" opacity="0.7"/>
+  </g>
+
+  <!-- Chatot (860,300) ↔ aero (1060,240): 6 particles -->
+  <g filter="url(#particleGlow)">
+    <circle cx="878" cy="294" r="2.3" fill="#3b82f6" opacity="0.85"/>
+    <circle cx="905" cy="285" r="2" fill="#3b82f6" opacity="0.6"/>
+    <circle cx="935" cy="274" r="2.8" fill="#3b82f6" opacity="0.45"/>
+    <circle cx="968" cy="264" r="2.2" fill="#3b82f6" opacity="0.9"/>
+    <circle cx="1003" cy="253" r="2.5" fill="#3b82f6" opacity="0.35"/>
+    <circle cx="1038" cy="245" r="2" fill="#3b82f6" opacity="0.75"/>
+  </g>
+
+  <!-- Chatot (860,300) ↔ chordprog (940,460): 4 particles -->
+  <g filter="url(#particleGlow)">
+    <circle cx="870" cy="332" r="2" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="886" cy="367" r="2.5" fill="#3b82f6" opacity="0.55"/>
+    <circle cx="905" cy="400" r="2.2" fill="#3b82f6" opacity="0.9"/>
+    <circle cx="925" cy="435" r="2" fill="#3b82f6" opacity="0.45"/>
+  </g>
+
+  <!-- RVC-Portal (620,520) ↔ Sentinel (1000,560): 5 particles -->
+  <g filter="url(#particleGlow)">
+    <circle cx="668" cy="526" r="2.3" fill="#f0a030" opacity="0.75"/>
+    <circle cx="730" cy="533" r="2.8" fill="#f0a030" opacity="0.5"/>
+    <circle cx="800" cy="542" r="2" fill="#f0a030" opacity="0.88"/>
+    <circle cx="870" cy="550" r="2.5" fill="#f0a030" opacity="0.38"/>
+    <circle cx="945" cy="556" r="2.2" fill="#f0a030" opacity="0.7"/>
+  </g>
+
+  <!-- Oxide (380,420) ↔ WaveForge (520,340): 4 particles -->
+  <g filter="url(#particleGlow)">
+    <circle cx="400" cy="410" r="2" fill="#d97706" opacity="0.75"/>
+    <circle cx="430" cy="395" r="2.5" fill="#d97706" opacity="0.5"/>
+    <circle cx="465" cy="375" r="2.2" fill="#d97706" opacity="0.85"/>
+    <circle cx="498" cy="355" r="2" fill="#d97706" opacity="0.6"/>
+  </g>
+
+  <!-- boids (440,620) ↔ dino (500,680): 2 particles (archived, dim) -->
+  <g filter="url(#particleGlow)">
+    <circle cx="458" cy="638" r="1.8" fill="#eab308" opacity="0.3"/>
+    <circle cx="480" cy="660" r="1.5" fill="#eab308" opacity="0.22"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 6: Node ultra-wide bloom (outermost)   -->
+  <!-- ============================================ -->
+  <g filter="url(#glowUltra)">
+    <!-- WaveForge — brightest node -->
+    <circle cx="520" cy="340" r="28" fill="#d97706" opacity="0.12"/>
+    <!-- aero — large node -->
+    <circle cx="1060" cy="240" r="30" fill="#3b82f6" opacity="0.1"/>
+    <!-- RVC-Portal — large node -->
+    <circle cx="620" cy="520" r="32" fill="#f0a030" opacity="0.1"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 7: Node wide bloom (breathing outer)   -->
+  <!-- ============================================ -->
+  <g filter="url(#glowWide)">
+    <!-- WaveForge -->
+    <circle cx="520" cy="340" r="34" fill="#d97706" opacity="0.18"/>
+    <!-- WaveForm -->
+    <circle cx="680" cy="260" r="26" fill="#d97706" opacity="0.13"/>
+    <!-- Oxide -->
+    <circle cx="380" cy="420" r="24" fill="#d97706" opacity="0.11"/>
+    <!-- Chatot -->
+    <circle cx="860" cy="300" r="28" fill="#3b82f6" opacity="0.14"/>
+    <!-- aero -->
+    <circle cx="1060" cy="240" r="36" fill="#3b82f6" opacity="0.16"/>
+    <!-- chordprog -->
+    <circle cx="940" cy="460" r="20" fill="#3b82f6" opacity="0.1"/>
+    <!-- RVC-Portal -->
+    <circle cx="620" cy="520" r="38" fill="#f0a030" opacity="0.16"/>
+    <!-- Sentinel -->
+    <circle cx="1000" cy="560" r="28" fill="#f0a030" opacity="0.12"/>
+    <!-- boids -->
+    <circle cx="440" cy="620" r="16" fill="#f0a030" opacity="0.08"/>
+    <!-- retrolaunch -->
+    <circle cx="780" cy="170" r="22" fill="#f97316" opacity="0.11"/>
+    <!-- dino -->
+    <circle cx="500" cy="680" r="14" fill="#eab308" opacity="0.08"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 8: Node medium bloom (breathing inner) -->
+  <!-- ============================================ -->
+  <g filter="url(#glowMedium)">
+    <!-- WaveForge -->
+    <circle cx="520" cy="340" r="28" fill="#d97706" opacity="0.35"/>
+    <!-- WaveForm -->
+    <circle cx="680" cy="260" r="22" fill="#d97706" opacity="0.28"/>
+    <!-- Oxide -->
+    <circle cx="380" cy="420" r="20" fill="#d97706" opacity="0.24"/>
+    <!-- Chatot -->
+    <circle cx="860" cy="300" r="24" fill="#3b82f6" opacity="0.3"/>
+    <!-- aero -->
+    <circle cx="1060" cy="240" r="30" fill="#3b82f6" opacity="0.32"/>
+    <!-- chordprog -->
+    <circle cx="940" cy="460" r="16" fill="#3b82f6" opacity="0.2"/>
+    <!-- RVC-Portal -->
+    <circle cx="620" cy="520" r="32" fill="#f0a030" opacity="0.32"/>
+    <!-- Sentinel -->
+    <circle cx="1000" cy="560" r="24" fill="#f0a030" opacity="0.26"/>
+    <!-- boids -->
+    <circle cx="440" cy="620" r="12" fill="#f0a030" opacity="0.16"/>
+    <!-- retrolaunch -->
+    <circle cx="780" cy="170" r="18" fill="#f97316" opacity="0.24"/>
+    <!-- dino -->
+    <circle cx="500" cy="680" r="10" fill="#eab308" opacity="0.15"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 9: Node tight glow (core halo)         -->
+  <!-- ============================================ -->
+  <g filter="url(#glowTight)">
+    <!-- WaveForge -->
+    <circle cx="520" cy="340" r="28" fill="#d97706" opacity="0.55"/>
+    <!-- WaveForm -->
+    <circle cx="680" cy="260" r="22" fill="#d97706" opacity="0.45"/>
+    <!-- Oxide -->
+    <circle cx="380" cy="420" r="20" fill="#d97706" opacity="0.4"/>
+    <!-- Chatot -->
+    <circle cx="860" cy="300" r="24" fill="#3b82f6" opacity="0.48"/>
+    <!-- aero -->
+    <circle cx="1060" cy="240" r="30" fill="#3b82f6" opacity="0.5"/>
+    <!-- chordprog -->
+    <circle cx="940" cy="460" r="16" fill="#3b82f6" opacity="0.35"/>
+    <!-- RVC-Portal -->
+    <circle cx="620" cy="520" r="32" fill="#f0a030" opacity="0.5"/>
+    <!-- Sentinel -->
+    <circle cx="1000" cy="560" r="24" fill="#f0a030" opacity="0.42"/>
+    <!-- boids -->
+    <circle cx="440" cy="620" r="12" fill="#f0a030" opacity="0.28"/>
+    <!-- retrolaunch -->
+    <circle cx="780" cy="170" r="18" fill="#f97316" opacity="0.4"/>
+    <!-- dino -->
+    <circle cx="500" cy="680" r="10" fill="#eab308" opacity="0.25"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 10: Node solid cores                   -->
+  <!-- ============================================ -->
+  <g>
+    <!-- WaveForge — brightest, most recent activity -->
+    <circle cx="520" cy="340" r="6" fill="#d97706" opacity="0.95"/>
+    <circle cx="520" cy="340" r="3.5" fill="#fbbf24" opacity="0.9"/>
+    <circle cx="520" cy="340" r="1.5" fill="#fef3c7" opacity="0.85"/>
+
+    <!-- WaveForm -->
+    <circle cx="680" cy="260" r="5" fill="#d97706" opacity="0.9"/>
+    <circle cx="680" cy="260" r="2.8" fill="#fbbf24" opacity="0.8"/>
+    <circle cx="680" cy="260" r="1.2" fill="#fef3c7" opacity="0.7"/>
+
+    <!-- Oxide -->
+    <circle cx="380" cy="420" r="4.5" fill="#d97706" opacity="0.88"/>
+    <circle cx="380" cy="420" r="2.5" fill="#fbbf24" opacity="0.75"/>
+    <circle cx="380" cy="420" r="1" fill="#fef3c7" opacity="0.65"/>
+
+    <!-- Chatot -->
+    <circle cx="860" cy="300" r="5.2" fill="#3b82f6" opacity="0.92"/>
+    <circle cx="860" cy="300" r="3" fill="#60a5fa" opacity="0.82"/>
+    <circle cx="860" cy="300" r="1.3" fill="#dbeafe" opacity="0.75"/>
+
+    <!-- aero — large prominent node -->
+    <circle cx="1060" cy="240" r="6.5" fill="#3b82f6" opacity="0.94"/>
+    <circle cx="1060" cy="240" r="3.8" fill="#60a5fa" opacity="0.85"/>
+    <circle cx="1060" cy="240" r="1.6" fill="#dbeafe" opacity="0.8"/>
+
+    <!-- chordprog -->
+    <circle cx="940" cy="460" r="3.8" fill="#3b82f6" opacity="0.85"/>
+    <circle cx="940" cy="460" r="2" fill="#60a5fa" opacity="0.72"/>
+    <circle cx="940" cy="460" r="0.9" fill="#dbeafe" opacity="0.6"/>
+
+    <!-- RVC-Portal — largest node -->
+    <circle cx="620" cy="520" r="7" fill="#f0a030" opacity="0.94"/>
+    <circle cx="620" cy="520" r="4" fill="#fbbf24" opacity="0.85"/>
+    <circle cx="620" cy="520" r="1.8" fill="#fef9c3" opacity="0.8"/>
+
+    <!-- Sentinel -->
+    <circle cx="1000" cy="560" r="5.2" fill="#f0a030" opacity="0.9"/>
+    <circle cx="1000" cy="560" r="3" fill="#fbbf24" opacity="0.78"/>
+    <circle cx="1000" cy="560" r="1.3" fill="#fef9c3" opacity="0.68"/>
+
+    <!-- boids (small, archived) -->
+    <circle cx="440" cy="620" r="3" fill="#f0a030" opacity="0.75"/>
+    <circle cx="440" cy="620" r="1.5" fill="#fbbf24" opacity="0.6"/>
+
+    <!-- retrolaunch -->
+    <circle cx="780" cy="170" r="4.2" fill="#f97316" opacity="0.88"/>
+    <circle cx="780" cy="170" r="2.3" fill="#fb923c" opacity="0.75"/>
+    <circle cx="780" cy="170" r="1" fill="#fed7aa" opacity="0.65"/>
+
+    <!-- dino (smallest, archived) -->
+    <circle cx="500" cy="680" r="2.5" fill="#eab308" opacity="0.7"/>
+    <circle cx="500" cy="680" r="1.2" fill="#fde047" opacity="0.55"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 11: Additional faint connector threads  -->
+  <!-- (secondary relationships, very subtle)        -->
+  <!-- ============================================ -->
+  <g opacity="0.15">
+    <!-- WaveForm ↔ retrolaunch (nearby) -->
+    <path d="M680,260 C710,220 745,195 780,170" fill="none" stroke="#d97706" stroke-width="0.8" stroke-linecap="round"/>
+    <!-- aero ↔ Sentinel (faint web↔python bridge) -->
+    <path d="M1060,240 C1050,350 1030,450 1000,560" fill="none" stroke="#64748b" stroke-width="0.6" stroke-linecap="round"/>
+    <!-- RVC-Portal ↔ boids -->
+    <path d="M620,520 C560,555 500,590 440,620" fill="none" stroke="#f0a030" stroke-width="0.7" stroke-linecap="round"/>
+    <!-- chordprog ↔ Sentinel -->
+    <path d="M940,460 C955,490 975,520 1000,560" fill="none" stroke="#64748b" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- LAYER 12: Exit state annotation               -->
+  <!-- ============================================ -->
+  <text
+    x="1420"
+    y="882"
+    text-anchor="end"
+    font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif"
+    font-size="10"
+    fill="#64748b"
+    opacity="0.4"
+    letter-spacing="0.3"
+  >Move mouse or press any key to exit ambient mode</text>
+
+</svg>

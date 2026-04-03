@@ -1,0 +1,43 @@
+{
+  "productName": "Engram",
+  "version": "0.1.0",
+  "identifier": "com.engram.app",
+  "build": {
+    "beforeBuildCommand": "pnpm build",
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": "default-src 'self' tauri: asset:; connect-src 'self' http://localhost:5173 http://localhost:9721 ws://localhost:9721 ws://localhost:5173 wss://localhost:5173; style-src 'self' 'unsafe-inline'; script-src 'self' 'wasm-unsafe-eval'; img-src 'self' asset: data:"
+    },
+    "windows": [
+      {
+        "label": "main",
+        "title": "Engram",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "decorations": false,
+        "transparent": true,
+        "windowEffects": {
+          "effects": ["sidebar"]
+        }
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png"
+    ],
+    "externalBin": ["binaries/engram-sidecar"]
+  },
+  "plugins": {}
+}

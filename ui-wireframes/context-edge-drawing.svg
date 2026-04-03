@@ -1,0 +1,364 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <!-- Filters -->
+    <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="sourceGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="targetGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="subtleGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="menuShadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="tooltipShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="selectedRing" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Dot grid pattern -->
+    <pattern id="dotGrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="0.6" fill="#ffffff" opacity="0.04"/>
+    </pattern>
+
+    <!-- Particle animation keyframes -->
+    <style>
+      @keyframes particleMove {
+        0% { opacity: 0; }
+        20% { opacity: 0.9; }
+        80% { opacity: 0.9; }
+        100% { opacity: 0; }
+      }
+      @keyframes pulseRing {
+        0% { opacity: 0.6; r: 32; }
+        50% { opacity: 1; r: 35; }
+        100% { opacity: 0.6; r: 32; }
+      }
+      @keyframes sourcePulse {
+        0% { opacity: 0.4; r: 30; }
+        50% { opacity: 0.7; r: 33; }
+        100% { opacity: 0.4; r: 30; }
+      }
+      @keyframes targetPulse {
+        0% { opacity: 0.3; r: 36; }
+        50% { opacity: 0.6; r: 39; }
+        100% { opacity: 0.3; r: 36; }
+      }
+      @keyframes validTargetPulse {
+        0% { opacity: 0.15; }
+        50% { opacity: 0.35; }
+        100% { opacity: 0.15; }
+      }
+      .particle1 { animation: particleMove 2s ease-in-out infinite; }
+      .particle2 { animation: particleMove 2s ease-in-out 0.5s infinite; }
+      .particle3 { animation: particleMove 2s ease-in-out 1s infinite; }
+      .particle4 { animation: particleMove 2s ease-in-out 1.5s infinite; }
+      .pulse-ring { animation: pulseRing 2s ease-in-out infinite; }
+      .source-pulse { animation: sourcePulse 2s ease-in-out infinite; }
+      .target-pulse { animation: targetPulse 1.5s ease-in-out infinite; }
+      .valid-target-pulse { animation: validTargetPulse 2s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Canvas background -->
+  <rect width="1440" height="900" fill="#0a0e17"/>
+  <rect width="1440" height="900" fill="url(#dotGrid)"/>
+
+  <!-- Vertical divider -->
+  <line x1="720" y1="60" x2="720" y2="860" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1" stroke-dasharray="4 8"/>
+
+  <!-- ========================================= -->
+  <!-- LEFT HALF: Context Menu                    -->
+  <!-- ========================================= -->
+
+  <!-- Section label -->
+  <text x="380" y="52" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle" font-weight="500">RIGHT-CLICK CONTEXT MENU</text>
+
+  <!-- Left half edges (dimmed) -->
+  <!-- WaveForge to WaveForm -->
+  <line x1="380" y1="380" x2="520" y2="290" stroke="#d97706" stroke-opacity="0.12" stroke-width="1.2"/>
+  <!-- WaveForge to Oxide -->
+  <line x1="380" y1="380" x2="280" y2="460" stroke="#d97706" stroke-opacity="0.12" stroke-width="1.2"/>
+  <!-- WaveForge to RVC-Portal -->
+  <line x1="380" y1="380" x2="450" y2="530" stroke="#d97706" stroke-opacity="0.12" stroke-width="1.2"/>
+  <!-- WaveForm to RVC-Portal -->
+  <line x1="520" y1="290" x2="450" y2="530" stroke="#d97706" stroke-opacity="0.08" stroke-width="1"/>
+  <!-- Oxide to RVC-Portal -->
+  <line x1="280" y1="460" x2="450" y2="530" stroke="#d97706" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Node: WaveForm (dimmed) -->
+  <g opacity="0.55">
+    <circle cx="520" cy="290" r="22" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.3" stroke-width="1.2"/>
+    <circle cx="520" cy="290" r="3.5" fill="#d97706" fill-opacity="0.6"/>
+    <text x="520" y="328" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">WaveForm</text>
+  </g>
+
+  <!-- Node: Oxide (dimmed) -->
+  <g opacity="0.55">
+    <circle cx="280" cy="460" r="20" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.3" stroke-width="1.2"/>
+    <circle cx="280" cy="460" r="3" fill="#d97706" fill-opacity="0.6"/>
+    <text x="280" y="494" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">Oxide</text>
+  </g>
+
+  <!-- Node: RVC-Portal (dimmed) -->
+  <g opacity="0.55">
+    <circle cx="450" cy="530" r="18" fill="#d97706" fill-opacity="0.08" stroke="#d97706" stroke-opacity="0.3" stroke-width="1.2"/>
+    <circle cx="450" cy="530" r="2.8" fill="#d97706" fill-opacity="0.6"/>
+    <text x="450" y="560" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">RVC-Portal</text>
+  </g>
+
+  <!-- Node: WaveForge (RIGHT-CLICKED, selected state) -->
+  <g>
+    <!-- Outer selected glow ring -->
+    <circle cx="380" cy="380" r="32" fill="none" stroke="#d97706" stroke-opacity="0.15" stroke-width="2" filter="url(#selectedRing)"/>
+    <!-- Main node -->
+    <circle cx="380" cy="380" r="25" fill="#d97706" fill-opacity="0.12" stroke="#d97706" stroke-opacity="0.6" stroke-width="1.5"/>
+    <!-- Inner dot -->
+    <circle cx="380" cy="380" r="4" fill="#d97706" fill-opacity="0.8"/>
+    <!-- Label -->
+    <text x="380" y="420" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" text-anchor="middle" font-weight="500">WaveForge</text>
+    <text x="380" y="433" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" text-anchor="middle">Rust</text>
+  </g>
+
+  <!-- Context Menu -->
+  <g filter="url(#menuShadow)">
+    <!-- Menu background -->
+    <rect x="410" y="244" width="220" height="370" rx="8" ry="8" fill="#111827" fill-opacity="0.96" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+
+    <!-- Menu item 1: Open in VS Code -->
+    <g>
+      <rect x="414" y="250" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="271" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Open in VS Code</text>
+      <text x="614" y="271" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" text-anchor="end" font-weight="400" letter-spacing="0.3">&#x2318;O</text>
+    </g>
+
+    <!-- Menu item 2: Open in Terminal -->
+    <g>
+      <rect x="414" y="282" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="303" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Open in Terminal</text>
+      <text x="614" y="303" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" text-anchor="end" font-weight="400" letter-spacing="0.3">&#x2318;T</text>
+    </g>
+
+    <!-- Menu item 3: Open in Finder -->
+    <g>
+      <rect x="414" y="314" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="335" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Open in Finder</text>
+      <text x="614" y="335" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" text-anchor="end" font-weight="400" letter-spacing="0.3">&#x2318;&#x21E7;F</text>
+    </g>
+
+    <!-- Menu item 4: Open on GitHub -->
+    <g>
+      <rect x="414" y="346" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="367" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Open on GitHub</text>
+      <text x="614" y="367" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" text-anchor="end" font-weight="400" letter-spacing="0.3">&#x2318;&#x21E7;G</text>
+    </g>
+
+    <!-- Separator 1 -->
+    <line x1="422" y1="386" x2="622" y2="386" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+    <!-- Menu item 5: Add Tag... -->
+    <g>
+      <rect x="414" y="392" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="413" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Add Tag...</text>
+    </g>
+
+    <!-- Menu item 6: Change Status -->
+    <g>
+      <rect x="414" y="424" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="445" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Change Status</text>
+      <text x="616" y="446" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" text-anchor="end" font-weight="400">&#x25B8;</text>
+    </g>
+
+    <!-- Menu item 7: Draw Connection (HOVERED) -->
+    <g>
+      <rect x="414" y="456" width="212" height="32" rx="4" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="428" y="477" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Draw Connection</text>
+      <text x="614" y="477" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="12" text-anchor="end" font-weight="400" letter-spacing="0.3">&#x2318;D</text>
+    </g>
+
+    <!-- Menu item 8: Change Color... -->
+    <g>
+      <rect x="414" y="488" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="509" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Change Color...</text>
+    </g>
+
+    <!-- Separator 2 -->
+    <line x1="422" y1="528" x2="622" y2="528" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+    <!-- Menu item 9: Archive Project -->
+    <g>
+      <rect x="414" y="534" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="555" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Archive Project</text>
+    </g>
+
+    <!-- Menu item 10: Remove from Engram (danger) -->
+    <g>
+      <rect x="414" y="566" width="212" height="32" rx="4" fill="transparent"/>
+      <text x="428" y="587" fill="#ef4444" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="13" font-weight="400">Remove from Engram</text>
+    </g>
+  </g>
+
+  <!-- Small node near menu for visual context: extra node "SynthCore" -->
+  <g opacity="0.4">
+    <circle cx="180" cy="320" r="15" fill="#d97706" fill-opacity="0.06" stroke="#d97706" stroke-opacity="0.2" stroke-width="1"/>
+    <circle cx="180" cy="320" r="2.5" fill="#d97706" fill-opacity="0.4"/>
+    <text x="180" y="348" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" text-anchor="middle">SynthCore</text>
+  </g>
+  <!-- Edge from SynthCore to WaveForge -->
+  <line x1="180" y1="320" x2="380" y2="380" stroke="#d97706" stroke-opacity="0.08" stroke-width="1"/>
+
+
+  <!-- ========================================= -->
+  <!-- RIGHT HALF: Edge Drawing Mode              -->
+  <!-- ========================================= -->
+
+  <!-- Section label -->
+  <text x="1070" y="52" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle" font-weight="500">EDGE DRAWING MODE</text>
+
+  <!-- Background edges (existing connections, dimmed) -->
+  <line x1="900" y1="350" x2="1050" y2="480" stroke="#3b82f6" stroke-opacity="0.08" stroke-width="1"/>
+  <line x1="1120" y1="260" x2="1200" y2="500" stroke="#3b82f6" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="1000" y1="180" x2="1120" y2="260" stroke="#f97316" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Node: retrolaunch (Swift, valid target) -->
+  <g>
+    <!-- Valid target indicator ring -->
+    <circle cx="1000" cy="180" r="24" fill="none" stroke="#f97316" stroke-opacity="0.15" stroke-width="1.5" class="valid-target-pulse"/>
+    <!-- Main node -->
+    <circle cx="1000" cy="180" r="18" fill="#f97316" fill-opacity="0.07" stroke="#f97316" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="1000" cy="180" r="3" fill="#f97316" fill-opacity="0.6"/>
+    <text x="1000" y="212" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">retrolaunch</text>
+    <text x="1000" y="224" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="8.5" text-anchor="middle">Swift</text>
+  </g>
+
+  <!-- Node: aero (TypeScript, DROP TARGET - prominent glow) -->
+  <g>
+    <!-- Outer pulsing target ring -->
+    <circle cx="1120" cy="260" r="38" fill="none" stroke="#3b82f6" stroke-opacity="0.2" stroke-width="2" class="target-pulse"/>
+    <!-- Glow fill -->
+    <circle cx="1120" cy="260" r="34" fill="#3b82f6" fill-opacity="0.06" filter="url(#targetGlow)"/>
+    <!-- Drop target ring -->
+    <circle cx="1120" cy="260" r="28" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-opacity="0.7" stroke-width="2"/>
+    <!-- Inner bright dot -->
+    <circle cx="1120" cy="260" r="5" fill="#3b82f6" fill-opacity="0.9"/>
+    <!-- Label -->
+    <text x="1120" y="302" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" text-anchor="middle" font-weight="600">aero</text>
+    <text x="1120" y="315" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="8.5" text-anchor="middle">TypeScript</text>
+    <!-- Drop target annotation -->
+    <line x1="1155" y1="250" x2="1195" y2="232" stroke="#64748b" stroke-opacity="0.4" stroke-width="0.8"/>
+    <text x="1200" y="228" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" font-style="italic">Drop target</text>
+  </g>
+
+  <!-- Node: Chatot (TypeScript, SOURCE - prominent) -->
+  <g>
+    <!-- Outer animated source ring -->
+    <circle cx="900" cy="350" r="32" fill="none" stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1.8" class="source-pulse"/>
+    <!-- Glow -->
+    <circle cx="900" cy="350" r="30" fill="#3b82f6" fill-opacity="0.08" filter="url(#sourceGlow)"/>
+    <!-- Main node (brighter) -->
+    <circle cx="900" cy="350" r="24" fill="#3b82f6" fill-opacity="0.14" stroke="#3b82f6" stroke-opacity="0.8" stroke-width="2"/>
+    <!-- Bright center -->
+    <circle cx="900" cy="350" r="5" fill="#3b82f6" fill-opacity="1"/>
+    <!-- Connection anchor indicator -->
+    <circle cx="900" cy="350" r="10" fill="none" stroke="#3b82f6" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="3 3"/>
+    <!-- Label -->
+    <text x="900" y="393" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" text-anchor="middle" font-weight="600">Chatot</text>
+    <text x="900" y="406" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="8.5" text-anchor="middle">TypeScript</text>
+    <!-- Source annotation -->
+    <line x1="870" y1="340" x2="830" y2="322" stroke="#64748b" stroke-opacity="0.4" stroke-width="0.8"/>
+    <text x="825" y="318" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" text-anchor="end" font-style="italic">Source</text>
+  </g>
+
+  <!-- In-progress edge: dashed bezier from Chatot to near aero -->
+  <path d="M 922 340 Q 1010 270 1080 278"
+        fill="none"
+        stroke="#3b82f6"
+        stroke-opacity="0.5"
+        stroke-width="2"
+        stroke-dasharray="8 4"
+        stroke-linecap="round"/>
+
+  <!-- Animated particles along the bezier path -->
+  <!-- Particle 1 -->
+  <circle cx="945" cy="328" r="2.5" fill="#3b82f6" fill-opacity="0.9" class="particle1"/>
+  <!-- Particle 2 -->
+  <circle cx="985" cy="300" r="2.2" fill="#3b82f6" fill-opacity="0.8" class="particle2"/>
+  <!-- Particle 3 -->
+  <circle cx="1025" cy="284" r="2" fill="#3b82f6" fill-opacity="0.7" class="particle3"/>
+  <!-- Particle 4 -->
+  <circle cx="1058" cy="279" r="1.8" fill="#3b82f6" fill-opacity="0.6" class="particle4"/>
+
+  <!-- Cursor indicator at drag endpoint -->
+  <g>
+    <!-- Crosshair circle -->
+    <circle cx="1080" cy="278" r="8" fill="none" stroke="#e2e8f0" stroke-opacity="0.6" stroke-width="1"/>
+    <!-- Crosshair lines -->
+    <line x1="1080" y1="268" x2="1080" y2="272" stroke="#e2e8f0" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="1080" y1="284" x2="1080" y2="288" stroke="#e2e8f0" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="1070" y1="278" x2="1074" y2="278" stroke="#e2e8f0" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="1086" y1="278" x2="1090" y2="278" stroke="#e2e8f0" stroke-opacity="0.5" stroke-width="1"/>
+    <!-- Center dot -->
+    <circle cx="1080" cy="278" r="1.5" fill="#e2e8f0" fill-opacity="0.8"/>
+  </g>
+
+  <!-- Node: chordprog (TypeScript, valid target) -->
+  <g>
+    <!-- Valid target ring -->
+    <circle cx="1050" cy="480" r="22" fill="none" stroke="#3b82f6" stroke-opacity="0.15" stroke-width="1.5" class="valid-target-pulse"/>
+    <!-- Main node -->
+    <circle cx="1050" cy="480" r="16" fill="#3b82f6" fill-opacity="0.07" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="1050" cy="480" r="2.8" fill="#3b82f6" fill-opacity="0.6"/>
+    <text x="1050" y="508" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">chordprog</text>
+    <text x="1050" y="520" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="8.5" text-anchor="middle">TypeScript</text>
+  </g>
+
+  <!-- Node: Sentinel (Python, valid target) -->
+  <g>
+    <!-- Valid target ring -->
+    <circle cx="1200" cy="500" r="28" fill="none" stroke="#f0a030" stroke-opacity="0.15" stroke-width="1.5" class="valid-target-pulse"/>
+    <!-- Main node -->
+    <circle cx="1200" cy="500" r="22" fill="#f0a030" fill-opacity="0.07" stroke="#f0a030" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="1200" cy="500" r="3.5" fill="#f0a030" fill-opacity="0.6"/>
+    <text x="1200" y="534" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10.5" text-anchor="middle" font-weight="500">Sentinel</text>
+    <text x="1200" y="546" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="8.5" text-anchor="middle">Python</text>
+  </g>
+
+  <!-- Extra dimmed node for density: "nexus" -->
+  <g opacity="0.35">
+    <circle cx="820" cy="520" r="14" fill="#3b82f6" fill-opacity="0.06" stroke="#3b82f6" stroke-opacity="0.2" stroke-width="1"/>
+    <circle cx="820" cy="520" r="2.2" fill="#3b82f6" fill-opacity="0.4"/>
+    <text x="820" y="546" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" text-anchor="middle">nexus</text>
+  </g>
+  <line x1="820" y1="520" x2="900" y2="350" stroke="#3b82f6" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Instructional tooltip -->
+  <g filter="url(#tooltipShadow)">
+    <rect x="1034" y="322" width="178" height="46" rx="6" ry="6" fill="#1e293b" fill-opacity="0.88" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+    <text x="1123" y="340" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="11" text-anchor="middle" font-weight="500">Click a project to connect</text>
+    <text x="1123" y="358" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" text-anchor="middle">ESC to cancel</text>
+  </g>
+
+  <!-- ========================================= -->
+  <!-- Bottom bar / status hint                   -->
+  <!-- ========================================= -->
+  <rect x="0" y="868" width="1440" height="32" fill="#0a0e17" fill-opacity="0.9"/>
+  <line x1="0" y1="868" x2="1440" y2="868" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  <text x="24" y="888" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace" font-size="10">engram</text>
+  <text x="100" y="888" fill="#475569" font-family="'SF Mono', 'Fira Code', monospace" font-size="10">v0.4.2</text>
+  <text x="720" y="888" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif" font-size="10" text-anchor="middle">Interaction States: Context Menu &amp; Edge Drawing</text>
+  <text x="1416" y="888" fill="#475569" font-family="'SF Mono', 'Fira Code', monospace" font-size="10" text-anchor="end">1440 x 900</text>
+
+</svg>
