@@ -12,22 +12,26 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import config
+from db.migrations.migrator import DatabaseMigrator
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Manage application startup and shutdown lifecycle.
 
-    Startup responsibilities (added in later phases):
-        - Run database migrations
-        - Start the file watcher background task
-        - Trigger an initial full scan
+    Startup:
+        - Run database migrations (blocks startup on failure).
+        - (Phase 15) Start the file watcher background task.
+        - (Phase 14) Trigger an initial full scan.
 
-    Shutdown responsibilities (added in later phases):
-        - Cancel the file watcher task
-        - Gracefully shut down the scan orchestrator
+    Shutdown:
+        - (Phase 15) Cancel the file watcher task.
+        - (Phase 14) Gracefully shut down the scan orchestrator.
     """
-    # TODO: Phase 4 — run database migrations
+    migrator = DatabaseMigrator(config.DB_PATH, config.MIGRATIONS_DIR)
+    if not migrator.migrate():
+        raise RuntimeError("Database migration failed — refusing to start.")
+
     # TODO: Phase 15 — start file watcher background task
     # TODO: Phase 14 — trigger initial full scan
     yield
