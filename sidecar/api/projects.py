@@ -5,8 +5,6 @@ projects.  Filtering by status, primary language, and tag is supported
 on the list endpoint.
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import field_validator
 from sqlalchemy.exc import IntegrityError
@@ -14,6 +12,7 @@ from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Project, ProjectTag, Tag
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -141,16 +140,6 @@ class ProjectPublic(SQLModel):
 
 router = APIRouter(prefix="/api/projects", tags=["projects"])
 
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
@@ -240,7 +229,7 @@ def create_project(
     Raises:
         HTTPException: 409 if a project with the same path already exists.
     """
-    now = _now_iso()
+    now = now_iso()
     project = Project(**data.model_dump(), created_at=now, updated_at=now)
     session.add(project)
     try:
@@ -284,7 +273,7 @@ def update_project(
         raise HTTPException(status_code=404, detail="Project not found")
 
     update_data = data.model_dump(exclude_unset=True)
-    update_data["updated_at"] = _now_iso()
+    update_data["updated_at"] = now_iso()
     project.sqlmodel_update(update_data)
 
     session.add(project)
@@ -327,7 +316,7 @@ def delete_project(
     if project.deleted_at is not None:
         return project
 
-    now = _now_iso()
+    now = now_iso()
     project.deleted_at = now
     project.updated_at = now
     session.add(project)

@@ -6,27 +6,12 @@ positions are persisted so the graph canvas can restore node layout on
 app load.
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import NodePosition, Project
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Pydantic request / response schemas
@@ -124,7 +109,7 @@ def update_position(
         raise HTTPException(status_code=404, detail="Position not found")
 
     update_data = data.model_dump(exclude_unset=True)
-    update_data["updated_at"] = _now_iso()
+    update_data["updated_at"] = now_iso()
     position.sqlmodel_update(update_data)
 
     session.add(position)
@@ -166,7 +151,7 @@ def batch_upsert_positions(
             )
 
     # --- Upsert each position ---------------------------------------------
-    now = _now_iso()
+    now = now_iso()
     results: list[NodePosition] = []
 
     for item in data.positions:

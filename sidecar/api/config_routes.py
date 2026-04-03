@@ -4,13 +4,12 @@ Provides endpoints for listing all config entries and upserting
 individual entries by key.
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends
 from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Config
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Pydantic request / response schemas
@@ -36,16 +35,6 @@ class ConfigPublic(SQLModel):
 # ---------------------------------------------------------------------------
 
 router = APIRouter(prefix="/api/config", tags=["config"])
-
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 # ---------------------------------------------------------------------------
 # Endpoints
@@ -89,7 +78,7 @@ def upsert_config(
     Returns:
         The upserted config entry.
     """
-    now = _now_iso()
+    now = now_iso()
     config = session.get(Config, key)
 
     if config is not None:
