@@ -32,3 +32,8 @@ __pycache__/
 *.pyo
 sidecar/*.egg-info/
 sidecar/.venv/
+
+# SQLite runtime databases
+*.db
+*.db-wal
+*.db-shm
