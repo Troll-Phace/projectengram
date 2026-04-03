@@ -1,0 +1,37 @@
+[project]
+name = "engram-sidecar"
+version = "0.1.0"
+description = "Python FastAPI backend sidecar for the Engram desktop project manager."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.34,<1",
+    "watchfiles>=1.0,<2",
+    "GitPython>=3.1,<4",
+    "sqlmodel>=0.0.22,<1",
+    "python-ulid>=3.0,<4",
+    "pydantic>=2.10,<3",
+    "aiofiles>=24.1,<25",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "httpx",
+    "pytest-asyncio",
+]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.black]
+line-length = 99
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 99
