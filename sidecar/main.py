@@ -12,7 +12,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import config
+from api.clusters import router as clusters_router
+from api.config_routes import router as config_router
+from api.edges import router as edges_router
+from api.positions import router as positions_router
 from api.projects import router as projects_router
+from api.tags import project_tags_router, router as tags_router
 from db.migrations.migrator import DatabaseMigrator
 
 
@@ -50,7 +55,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(clusters_router)
+app.include_router(config_router)
+app.include_router(edges_router)
+app.include_router(positions_router)
 app.include_router(projects_router)
+app.include_router(project_tags_router)
+app.include_router(tags_router)
 
 
 @app.get("/api/health")
