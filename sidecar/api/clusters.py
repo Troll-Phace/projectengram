@@ -5,8 +5,6 @@ clusters, as well as managing which projects belong to each cluster
 via the ``project_clusters`` join table.
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import field_validator
 from sqlalchemy.exc import IntegrityError
@@ -14,6 +12,7 @@ from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Cluster, Project, ProjectCluster
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Pydantic request / response schemas
@@ -98,16 +97,6 @@ class ClusterMemberAdd(SQLModel):
 
 router = APIRouter(prefix="/api/clusters", tags=["clusters"])
 
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 # ---------------------------------------------------------------------------
 # Cluster CRUD endpoints
 # ---------------------------------------------------------------------------
@@ -145,7 +134,7 @@ def create_cluster(
     Returns:
         The newly created cluster.
     """
-    now = _now_iso()
+    now = now_iso()
     cluster = Cluster(**data.model_dump(), created_at=now, updated_at=now)
     session.add(cluster)
     session.commit()
@@ -182,7 +171,7 @@ def update_cluster(
         raise HTTPException(status_code=404, detail="Cluster not found")
 
     update_data = data.model_dump(exclude_unset=True)
-    update_data["updated_at"] = _now_iso()
+    update_data["updated_at"] = now_iso()
     cluster.sqlmodel_update(update_data)
 
     session.add(cluster)

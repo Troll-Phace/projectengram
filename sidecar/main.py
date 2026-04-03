@@ -17,6 +17,7 @@ from api.config_routes import router as config_router
 from api.edges import router as edges_router
 from api.positions import router as positions_router
 from api.projects import router as projects_router
+from api.scan import router as scan_router
 from api.tags import project_tags_router, router as tags_router
 from db.migrations.migrator import DatabaseMigrator
 
@@ -60,6 +61,7 @@ app.include_router(config_router)
 app.include_router(edges_router)
 app.include_router(positions_router)
 app.include_router(projects_router)
+app.include_router(scan_router)
 app.include_router(project_tags_router)
 app.include_router(tags_router)
 

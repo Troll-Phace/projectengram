@@ -6,8 +6,6 @@ through the API; auto-computed edges are managed by the scanning
 pipeline.
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import field_validator
 from sqlalchemy.exc import IntegrityError
@@ -15,6 +13,7 @@ from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Edge, Project
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Pydantic request / response schemas
@@ -99,16 +98,6 @@ class EdgePublic(SQLModel):
 
 router = APIRouter(prefix="/api/edges", tags=["edges"])
 
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
@@ -183,7 +172,7 @@ def create_edge(
     if target is None:
         raise HTTPException(status_code=404, detail="Target project not found")
 
-    now = _now_iso()
+    now = now_iso()
     edge = Edge(
         **data.model_dump(),
         edge_type="manual",
@@ -238,7 +227,7 @@ def update_edge(
         )
 
     update_data = data.model_dump(exclude_unset=True)
-    update_data["updated_at"] = _now_iso()
+    update_data["updated_at"] = now_iso()
     edge.sqlmodel_update(update_data)
 
     session.add(edge)

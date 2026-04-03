@@ -8,14 +8,13 @@ exported:
 * ``project_tags_router`` — tag assignment under ``/api/projects``
 """
 
-from datetime import UTC, datetime
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Project, ProjectTag, Tag
+from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
 # Pydantic request / response schemas
@@ -49,20 +48,6 @@ class TagAssign(SQLModel):
     """Request body for assigning a tag to a project."""
 
     tag_id: str
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-
-def _now_iso() -> str:
-    """Return the current UTC time as an ISO 8601 string.
-
-    Returns:
-        A string in ``YYYY-MM-DDTHH:MM:SSZ`` format.
-    """
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 # ---------------------------------------------------------------------------
@@ -106,7 +91,7 @@ def create_tag(
     Raises:
         HTTPException: 409 if a tag with the same name already exists.
     """
-    tag = Tag(**data.model_dump(), created_at=_now_iso())
+    tag = Tag(**data.model_dump(), created_at=now_iso())
     session.add(tag)
     try:
         session.commit()
