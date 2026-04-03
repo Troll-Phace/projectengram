@@ -12,6 +12,8 @@ Available analyzers:
   config file presence.
 * **languages** — count lines of code per language and compute
   percentage breakdowns.
+* **git_analyzer** — extract git metadata (branch, dirty status,
+  last commit, branch count, remote URL).
 * **size** — compute total size and file counts for a project.
 """
 
@@ -19,6 +21,7 @@ from scanner.analyzers.frameworks import (
     FrameworkDetectionResult,
     detect_frameworks,
 )
+from scanner.analyzers.git_analyzer import GitAnalysisResult, analyze_git
 from scanner.analyzers.languages import (
     LanguageBreakdownResult,
     analyze_languages,
@@ -32,10 +35,12 @@ from scanner.analyzers.size import SizeResult, compute_size
 
 __all__ = [
     "FrameworkDetectionResult",
+    "GitAnalysisResult",
     "LanguageBreakdownResult",
     "ManifestInfo",
     "ProjectTypeResult",
     "SizeResult",
+    "analyze_git",
     "analyze_languages",
     "compute_size",
     "detect_frameworks",
