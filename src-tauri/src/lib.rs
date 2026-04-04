@@ -1,3 +1,4 @@
+mod commands;
 mod sidecar;
 
 use sidecar::{SidecarState, SIDECAR_PORT};
@@ -11,6 +12,14 @@ pub fn run() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_dialog::init())
+        .invoke_handler(tauri::generate_handler![
+            commands::open_in_vscode,
+            commands::open_in_terminal,
+            commands::open_in_finder,
+            commands::pick_folder,
+            commands::get_sidecar_port,
+        ])
         .setup(|app| {
             let handle = app.handle().clone();
 
