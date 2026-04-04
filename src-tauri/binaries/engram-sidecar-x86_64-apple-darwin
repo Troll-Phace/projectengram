@@ -1,0 +1,4 @@
+#!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SIDECAR_DIR="$SCRIPT_DIR/../../sidecar"
+exec python3 "$SIDECAR_DIR/main.py" "$@"
