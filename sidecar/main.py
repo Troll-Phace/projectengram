@@ -22,6 +22,7 @@ from api.scan import router as scan_router
 from api.tags import project_tags_router, router as tags_router
 from db.migrations.migrator import DatabaseMigrator
 from scanner.orchestrator import ScanOrchestrator
+from scanner.watcher import ProjectWatcher
 
 
 @asynccontextmanager
@@ -32,8 +33,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         - Run database migrations (blocks startup on failure).
         - Create and start the scan orchestrator.
         - Trigger an initial full scan (non-blocking background task).
+        - Start the file watcher for real-time project monitoring.
 
     Shutdown:
+        - Stop the file watcher and cancel pending debounce timers.
+        - Cancel any inflight full scan task.
         - Gracefully shut down the scan orchestrator.
     """
     migrator = DatabaseMigrator(config.DB_PATH, config.MIGRATIONS_DIR)
@@ -48,9 +52,15 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Trigger initial full scan (runs in background, non-blocking)
     scan_task = asyncio.create_task(orchestrator.trigger_full_scan())
 
-    # TODO: Phase 15 — start file watcher background task
+    # Start file watcher for real-time project monitoring
+    watcher = ProjectWatcher(orchestrator)
+    app.state.watcher = watcher
+    await watcher.start()
+
     yield
-    # TODO: Phase 15 — cancel file watcher task
+
+    # Stop watcher before tearing down the orchestrator
+    await watcher.stop()
 
     # Cancel inflight full scan if still running, then shut down workers
     if not scan_task.done():
