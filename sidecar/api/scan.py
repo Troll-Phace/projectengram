@@ -9,10 +9,13 @@ the ``missing`` flag accordingly.
 
 import asyncio
 import json
+import logging
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlmodel import Session, SQLModel, select
+
+_log = logging.getLogger(__name__)
 
 from db.session import get_session
 from models import Config, Project
@@ -58,6 +61,24 @@ class ScanStatusPublic(SQLModel):
     total: int | None = None
     completed: int | None = None
     errors: int | None = None
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+
+def _log_task_exception(task: asyncio.Task[None]) -> None:
+    """Log unhandled exceptions from fire-and-forget scan tasks.
+
+    Args:
+        task: The completed asyncio task to inspect.
+    """
+    if task.cancelled():
+        return
+    exc = task.exception()
+    if exc is not None:
+        _log.error("Background scan task %s failed: %s", task.get_name(), exc)
 
 
 # ---------------------------------------------------------------------------
@@ -216,8 +237,6 @@ async def scan_full(
             project.updated_at = now
             session.add(project)
 
-    # TODO: Phase 16 — broadcast "project_missing" via WebSocket
-
     # --- Clear missing flag on existing projects ---
     for existing_kp in result.existing:
         project = session.get(Project, existing_kp.id)
@@ -228,11 +247,25 @@ async def scan_full(
 
     session.commit()
 
-    # TODO: Phase 16 — broadcast "new_project_detected" via WebSocket
+    # Broadcast WebSocket events for discovery results
+    event_hub = request.app.state.event_hub
+    for missing_kp in result.missing:
+        await event_hub.broadcast("project_missing", {
+            "id": missing_kp.id,
+            "path": missing_kp.path,
+        })
+    for new_dir in result.new:
+        await event_hub.broadcast("new_project_detected", {
+            "path": new_dir.path,
+            "name": new_dir.name,
+        })
 
     # Trigger full analysis pipeline in the background
     orchestrator: ScanOrchestrator = request.app.state.orchestrator
-    asyncio.create_task(orchestrator.trigger_full_scan())
+    task = asyncio.create_task(
+        orchestrator.trigger_full_scan(), name="full-scan-api"
+    )
+    task.add_done_callback(_log_task_exception)
 
     return DiscoveryResultPublic(
         new=[

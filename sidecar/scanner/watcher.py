@@ -19,6 +19,10 @@ Reference: ARCHITECTURE.md §8 — File Watching & Incremental Updates.
 import asyncio
 import logging
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from api.websocket import EventHub
 
 from watchfiles import Change, awatch
 
@@ -58,14 +62,21 @@ class ProjectWatcher:
             paths to their ULID project IDs.
     """
 
-    def __init__(self, orchestrator: ScanOrchestrator) -> None:
+    def __init__(
+        self,
+        orchestrator: ScanOrchestrator,
+        event_hub: "EventHub | None" = None,
+    ) -> None:
         """Initialize the project watcher.
 
         Args:
             orchestrator: The scan orchestrator instance used to trigger
                 full and incremental scans.
+            event_hub: Optional WebSocket event hub for broadcasting
+                real-time notifications to connected clients.
         """
         self._orchestrator: ScanOrchestrator = orchestrator
+        self._event_hub = event_hub
         self._stop_event: asyncio.Event | None = None
         self._task: asyncio.Task[None] | None = None
         self._debouncer: AsyncDebouncer | None = None
@@ -88,6 +99,16 @@ class ProjectWatcher:
         exc = task.exception()
         if exc is not None:
             _log.error("Background scan task %s failed: %s", task.get_name(), exc)
+
+    async def _broadcast(self, event: str, data: dict[str, Any]) -> None:
+        """Broadcast an event via the WebSocket hub, if available.
+
+        Args:
+            event: Event type string.
+            data: Event payload dictionary.
+        """
+        if self._event_hub is not None:
+            await self._event_hub.broadcast(event, data)
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -211,6 +232,10 @@ class ProjectWatcher:
         if len(rel.parts) == 1:
             if change_type == Change.added:
                 _log.info("New project directory detected: %s", project_dir_name)
+                await self._broadcast("new_project_detected", {
+                    "path": project_dir,
+                    "name": project_dir_name,
+                })
                 await self._refresh_cache()
                 task = asyncio.create_task(
                     self._orchestrator.trigger_full_scan(),
@@ -221,6 +246,12 @@ class ProjectWatcher:
 
             if change_type == Change.deleted:
                 _log.info("Project directory removed: %s", project_dir_name)
+                missing_id = self._path_to_project_id.get(project_dir)
+                if missing_id:
+                    await self._broadcast("project_missing", {
+                        "id": missing_id,
+                        "path": project_dir,
+                    })
                 await self._refresh_cache()
                 task = asyncio.create_task(
                     self._orchestrator.trigger_full_scan(),

@@ -20,6 +20,7 @@ from api.positions import router as positions_router
 from api.projects import router as projects_router
 from api.scan import router as scan_router
 from api.tags import project_tags_router, router as tags_router
+from api.websocket import EventHub, router as websocket_router
 from db.migrations.migrator import DatabaseMigrator
 from scanner.orchestrator import ScanOrchestrator
 from scanner.watcher import ProjectWatcher
@@ -44,8 +45,12 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     if not migrator.migrate():
         raise RuntimeError("Database migration failed — refusing to start.")
 
+    # Create the WebSocket event hub (must be available before orchestrator)
+    event_hub = EventHub()
+    app.state.event_hub = event_hub
+
     # Create and start the scan orchestrator
-    orchestrator = ScanOrchestrator()
+    orchestrator = ScanOrchestrator(event_hub=event_hub)
     app.state.orchestrator = orchestrator
     await orchestrator.start()
 
@@ -53,7 +58,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     scan_task = asyncio.create_task(orchestrator.trigger_full_scan())
 
     # Start file watcher for real-time project monitoring
-    watcher = ProjectWatcher(orchestrator)
+    watcher = ProjectWatcher(orchestrator, event_hub=event_hub)
     app.state.watcher = watcher
     await watcher.start()
 
@@ -90,6 +95,7 @@ app.include_router(projects_router)
 app.include_router(scan_router)
 app.include_router(project_tags_router)
 app.include_router(tags_router)
+app.include_router(websocket_router)
 
 
 @app.get("/api/health")

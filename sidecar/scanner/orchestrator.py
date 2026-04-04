@@ -27,10 +27,14 @@ Reference: ARCHITECTURE.md §9 — Scan Concurrency.
 import asyncio
 import json
 import logging
+import time
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from api.websocket import EventHub
 
 from sqlmodel import Session, select
 
@@ -61,6 +65,25 @@ PRIORITY_WATCHER: int = 10
 
 MAX_CONCURRENT: int = 4
 """Maximum number of projects analyzed concurrently."""
+
+_TRACKED_FIELDS: list[str] = [
+    "package_manager",
+    "frameworks",
+    "languages",
+    "primary_language",
+    "loc",
+    "file_count",
+    "git_branch",
+    "git_dirty",
+    "git_last_commit_hash",
+    "git_last_commit_date",
+    "git_last_commit_msg",
+    "git_branch_count",
+    "git_remote_url",
+    "description",
+    "size_bytes",
+]
+"""Project model fields tracked for change-detection during persist."""
 
 _log = logging.getLogger(__name__)
 
@@ -300,7 +323,15 @@ class ScanOrchestrator:
         await orchestrator.shutdown()
     """
 
-    def __init__(self) -> None:
+    def __init__(self, event_hub: "EventHub | None" = None) -> None:
+        """Initialise the scan orchestrator.
+
+        Args:
+            event_hub: Optional WebSocket event hub for broadcasting
+                scan progress and project update events.  When ``None``
+                (the default), all broadcast calls are silently skipped,
+                which is useful for testing.
+        """
         self._queue: asyncio.PriorityQueue[ScanJob] = asyncio.PriorityQueue()
         self._semaphore: asyncio.Semaphore = asyncio.Semaphore(MAX_CONCURRENT)
         self._project_locks: dict[str, asyncio.Lock] = {}
@@ -309,6 +340,7 @@ class ScanOrchestrator:
         self._full_scan_lock: asyncio.Lock = asyncio.Lock()
         self._shutdown: bool = False
         self._seq: int = 0
+        self._event_hub = event_hub
 
     # ------------------------------------------------------------------
     # Helpers
@@ -343,6 +375,18 @@ class ScanOrchestrator:
             A ``ScanProgress`` dataclass with current pipeline state.
         """
         return self._progress
+
+    async def _broadcast(self, event: str, data: dict[str, Any]) -> None:
+        """Broadcast an event via the WebSocket hub, if available.
+
+        No-op when ``event_hub`` was not provided (e.g. in tests).
+
+        Args:
+            event: Event type string.
+            data: Event payload dictionary.
+        """
+        if self._event_hub is not None:
+            await self._event_hub.broadcast(event, data)
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -421,9 +465,14 @@ class ScanOrchestrator:
         Separated from ``trigger_full_scan`` so that the lock and
         progress reset live in the caller.
         """
+        start_time = time.monotonic()
+
         # Phase 1: Discovery -------------------------------------------
         self._progress = ScanProgress(
             status=ScanStatus.SCANNING, phase="discovery"
+        )
+        await self._broadcast(
+            "scan_progress", {"phase": "discovery", "current": 0, "total": 0}
         )
 
         root_str = await asyncio.to_thread(_read_projects_root)
@@ -464,6 +513,10 @@ class ScanOrchestrator:
         self._progress.total = len(existing)
         self._progress.completed = 0
         self._progress.errors = 0
+        await self._broadcast(
+            "scan_progress",
+            {"phase": "analyzing", "current": 0, "total": len(existing)},
+        )
 
         async def _analyze_with_semaphore(
             project_id: str, project_path: str
@@ -472,6 +525,14 @@ class ScanOrchestrator:
             async with self._semaphore:
                 await self._analyze_project(project_id, project_path)
             self._progress.completed += 1
+            await self._broadcast(
+                "scan_progress",
+                {
+                    "phase": "analyzing",
+                    "current": self._progress.completed,
+                    "total": self._progress.total,
+                },
+            )
 
         tasks = [
             _analyze_with_semaphore(kp.id, kp.path)
@@ -490,6 +551,9 @@ class ScanOrchestrator:
 
         # Phase 3: Edge computation ------------------------------------
         self._progress.phase = "edges"
+        await self._broadcast(
+            "scan_progress", {"phase": "edges", "current": 0, "total": 0}
+        )
         try:
             edge_result = await asyncio.to_thread(_run_edge_computation)
             _log.info(
@@ -502,6 +566,15 @@ class ScanOrchestrator:
             )
         except Exception:
             _log.exception("Edge computation failed")
+
+        duration_ms = int((time.monotonic() - start_time) * 1000)
+        await self._broadcast(
+            "scan_completed",
+            {
+                "duration_ms": duration_ms,
+                "projects_scanned": len(existing),
+            },
+        )
 
     async def trigger_manual_rescan(self, project_id: str) -> None:
         """Enqueue a single project for rescan at manual priority.
@@ -608,9 +681,14 @@ class ScanOrchestrator:
                 _log.warning("Project dir missing: %s", project_path)
                 return
             analyzer_results = await self._run_analyzers(project_dir)
-            await asyncio.to_thread(
+            changed_fields = await asyncio.to_thread(
                 self._persist_results, project_id, analyzer_results
             )
+            if changed_fields:
+                await self._broadcast(
+                    "project_updated",
+                    {"id": project_id, "fields": changed_fields},
+                )
 
     async def _run_analyzers(
         self, project_dir: Path
@@ -712,7 +790,7 @@ class ScanOrchestrator:
 
     def _persist_results(
         self, project_id: str, results: dict[str, Any]
-    ) -> None:
+    ) -> list[str]:
         """Map analyzer results onto the Project model and commit.
 
         Called via ``asyncio.to_thread`` so it runs in a thread pool
@@ -722,6 +800,11 @@ class ScanOrchestrator:
             project_id: ULID of the project to update.
             results: Dict of analyzer name to result dataclass, as
                 returned by ``_run_analyzers``.
+
+        Returns:
+            A list of field names that changed compared to the
+            previously stored values.  Empty when nothing changed
+            or the project was not found.
         """
         with Session(engine) as session:
             project = session.get(Project, project_id)
@@ -729,7 +812,10 @@ class ScanOrchestrator:
                 _log.warning(
                     "Project %s not found, skipping persist", project_id
                 )
-                return
+                return []
+
+            # Snapshot for change detection --------------------------------
+            before = {f: getattr(project, f) for f in _TRACKED_FIELDS}
 
             now = now_iso()
 
@@ -768,9 +854,15 @@ class ScanOrchestrator:
             # Size ---------------------------------------------------------
             project.size_bytes = size.size_bytes
 
+            # Change detection ---------------------------------------------
+            after = {f: getattr(project, f) for f in _TRACKED_FIELDS}
+            changed = [f for f in _TRACKED_FIELDS if before[f] != after[f]]
+
             # Timestamps ---------------------------------------------------
             project.last_scanned_at = now
             project.updated_at = now
 
             session.add(project)
             session.commit()
+
+            return changed
