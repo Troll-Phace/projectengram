@@ -110,9 +110,14 @@ async def health() -> dict[str, str]:
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description=config.APP_TITLE)
+    parser.add_argument("--port", type=int, default=config.SIDECAR_PORT)
+    args = parser.parse_args()
     uvicorn.run(
         "main:app",
         host="127.0.0.1",
-        port=config.SIDECAR_PORT,
+        port=args.port,
         log_level="info",
     )

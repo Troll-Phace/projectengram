@@ -21,7 +21,9 @@
         "height": 800,
         "minWidth": 800,
         "minHeight": 600,
-        "decorations": false,
+        "decorations": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
         "transparent": true,
         "windowEffects": {
           "effects": ["sidebar"]
