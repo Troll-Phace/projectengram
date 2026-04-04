@@ -14,6 +14,7 @@ Available analyzers:
   percentage breakdowns.
 * **git_analyzer** — extract git metadata (branch, dirty status,
   last commit, branch count, remote URL).
+* **readme** — extract the first paragraph of prose from README files.
 * **size** — compute total size and file counts for a project.
 """
 
@@ -31,6 +32,7 @@ from scanner.analyzers.project_type import (
     ProjectTypeResult,
     detect_project_type,
 )
+from scanner.analyzers.readme import ReadmeResult, extract_readme
 from scanner.analyzers.size import SizeResult, compute_size
 
 __all__ = [
@@ -39,10 +41,12 @@ __all__ = [
     "LanguageBreakdownResult",
     "ManifestInfo",
     "ProjectTypeResult",
+    "ReadmeResult",
     "SizeResult",
     "analyze_git",
     "analyze_languages",
     "compute_size",
     "detect_frameworks",
     "detect_project_type",
+    "extract_readme",
 ]
