@@ -7,15 +7,17 @@ directories on disk, diffs them against known projects, and updates
 the ``missing`` flag accordingly.
 """
 
+import asyncio
 import json
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlmodel import Session, SQLModel, select
 
 from db.session import get_session
 from models import Config, Project
 from scanner.discovery import DiscoveryResult, KnownProject, discover
+from scanner.orchestrator import ScanOrchestrator
 from utils.time import now_iso
 
 # ---------------------------------------------------------------------------
@@ -52,6 +54,10 @@ class ScanStatusPublic(SQLModel):
 
     status: str
     progress: float | None = None
+    phase: str | None = None
+    total: int | None = None
+    completed: int | None = None
+    errors: int | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -110,22 +116,39 @@ def _resolve_projects_root(raw_value: str) -> Path:
 
 
 @router.get("/status", response_model=ScanStatusPublic)
-def scan_status() -> ScanStatusPublic:
-    """Return the current scan status.
+async def scan_status(request: Request) -> ScanStatusPublic:
+    """Return the current scan status from the orchestrator.
 
-    This is a stub that always returns idle.  The orchestrator
-    (Phase 14) will replace this with real progress tracking.
+    Reads live progress data from the ``ScanOrchestrator`` stored on
+    ``app.state`` and maps it into the public response model.
+
+    Args:
+        request: The incoming request (used to access app state).
 
     Returns:
-        A ``ScanStatusPublic`` indicating the scanner is idle.
+        A ``ScanStatusPublic`` with real progress tracking data.
     """
-    # TODO: Phase 14 — return real scan progress from orchestrator
-    return ScanStatusPublic(status="idle", progress=None)
+    orchestrator: ScanOrchestrator = request.app.state.orchestrator
+    progress = orchestrator.get_status()
+
+    ratio: float | None = None
+    if progress.total > 0:
+        ratio = progress.completed / progress.total
+
+    return ScanStatusPublic(
+        status=progress.status.value,
+        progress=ratio,
+        phase=progress.phase,
+        total=progress.total,
+        completed=progress.completed,
+        errors=progress.errors if progress.errors > 0 else None,
+    )
 
 
 @router.post("/full", response_model=DiscoveryResultPublic)
-def scan_full(
+async def scan_full(
     *,
+    request: Request,
     session: Session = Depends(get_session),
 ) -> DiscoveryResultPublic:
     """Run a full discovery scan against the configured projects root.
@@ -135,7 +158,12 @@ def scan_full(
     projects in the database, and updates the ``missing`` flag on
     affected projects.
 
+    After discovery completes and the response is built, the full
+    analysis pipeline is triggered as a background task via the scan
+    orchestrator.
+
     Args:
+        request: The incoming request (used to access app state).
         session: The database session (injected).
 
     Returns:
@@ -174,8 +202,10 @@ def scan_full(
         for p in known_rows
     ]
 
-    # --- Run discovery ---
-    result: DiscoveryResult = discover(resolved_root, known_projects)
+    # --- Run discovery (blocking I/O — run in thread pool) ---
+    result: DiscoveryResult = await asyncio.to_thread(
+        discover, resolved_root, known_projects
+    )
 
     # --- Update missing projects ---
     now = now_iso()
@@ -200,6 +230,10 @@ def scan_full(
 
     # TODO: Phase 16 — broadcast "new_project_detected" via WebSocket
 
+    # Trigger full analysis pipeline in the background
+    orchestrator: ScanOrchestrator = request.app.state.orchestrator
+    asyncio.create_task(orchestrator.trigger_full_scan())
+
     return DiscoveryResultPublic(
         new=[
             DiscoveredDirectoryPublic(name=d.name, path=d.path)
@@ -214,18 +248,38 @@ def scan_full(
     )
 
 
-@router.post("/project/{project_id}", status_code=501)
-def scan_project(*, project_id: str) -> dict:
-    """Trigger a scan for a single project.
+@router.post("/project/{project_id}", status_code=202)
+async def scan_project(
+    *,
+    request: Request,
+    project_id: str,
+    session: Session = Depends(get_session),
+) -> dict:
+    """Trigger a rescan for a single project.
 
-    This is a stub — per-project scanning will be implemented in a
-    future phase once the analyzer pipeline is complete.
+    Validates the project exists and has a path, then enqueues a
+    manual-priority rescan via the orchestrator.  Returns immediately
+    with HTTP 202 Accepted.
 
     Args:
+        request: The incoming request (used to access app state).
         project_id: The ULID of the project to scan.
+        session: The database session (injected).
 
     Returns:
-        A dictionary with a detail message indicating the endpoint is
-        not yet implemented.
+        A dictionary confirming the scan has been queued.
+
+    Raises:
+        HTTPException: 404 if the project does not exist.
+        HTTPException: 422 if the project has no path.
     """
-    return {"detail": "Not implemented — available in a future phase."}
+    project = session.get(Project, project_id)
+    if project is None:
+        raise HTTPException(status_code=404, detail="Project not found.")
+    if project.path is None:
+        raise HTTPException(status_code=422, detail="Project has no path.")
+
+    orchestrator: ScanOrchestrator = request.app.state.orchestrator
+    await orchestrator.trigger_manual_rescan(project_id)
+
+    return {"detail": "Scan queued.", "project_id": project_id}

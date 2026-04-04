@@ -4,6 +4,7 @@ Starts the async HTTP + WebSocket server that the Tauri desktop shell
 communicates with over localhost.
 """
 
+import asyncio
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
@@ -20,6 +21,7 @@ from api.projects import router as projects_router
 from api.scan import router as scan_router
 from api.tags import project_tags_router, router as tags_router
 from db.migrations.migrator import DatabaseMigrator
+from scanner.orchestrator import ScanOrchestrator
 
 
 @asynccontextmanager
@@ -28,22 +30,36 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     Startup:
         - Run database migrations (blocks startup on failure).
-        - (Phase 15) Start the file watcher background task.
-        - (Phase 14) Trigger an initial full scan.
+        - Create and start the scan orchestrator.
+        - Trigger an initial full scan (non-blocking background task).
 
     Shutdown:
-        - (Phase 15) Cancel the file watcher task.
-        - (Phase 14) Gracefully shut down the scan orchestrator.
+        - Gracefully shut down the scan orchestrator.
     """
     migrator = DatabaseMigrator(config.DB_PATH, config.MIGRATIONS_DIR)
     if not migrator.migrate():
         raise RuntimeError("Database migration failed — refusing to start.")
 
+    # Create and start the scan orchestrator
+    orchestrator = ScanOrchestrator()
+    app.state.orchestrator = orchestrator
+    await orchestrator.start()
+
+    # Trigger initial full scan (runs in background, non-blocking)
+    scan_task = asyncio.create_task(orchestrator.trigger_full_scan())
+
     # TODO: Phase 15 — start file watcher background task
-    # TODO: Phase 14 — trigger initial full scan
     yield
     # TODO: Phase 15 — cancel file watcher task
-    # TODO: Phase 14 — shut down scan orchestrator
+
+    # Cancel inflight full scan if still running, then shut down workers
+    if not scan_task.done():
+        scan_task.cancel()
+        try:
+            await scan_task
+        except asyncio.CancelledError:
+            pass
+    await orchestrator.shutdown()
 
 
 app = FastAPI(title=config.APP_TITLE, version=config.SIDECAR_VERSION, lifespan=lifespan)

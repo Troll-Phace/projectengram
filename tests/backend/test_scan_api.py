@@ -169,19 +169,28 @@ def api_env_with_projects(
 
 
 class TestScanStatus:
-    """GET /api/scan/status — idle status stub."""
+    """GET /api/scan/status — scan status endpoint."""
 
-    def test_status_returns_idle(
+    def test_status_returns_valid_response(
         self, api_env: tuple[Session, TestClient]
     ) -> None:
-        """The status endpoint returns idle with no progress."""
+        """The status endpoint returns a well-formed response.
+
+        The lifespan fires a background full scan on startup, so the
+        status may be ``"idle"`` or ``"scanning"`` depending on timing.
+        We validate the response shape and allowed values rather than
+        asserting a specific state.
+        """
         _, client = api_env
         resp = client.get("/api/scan/status")
 
         assert resp.status_code == 200
         data = resp.json()
-        assert data["status"] == "idle"
-        assert data["progress"] is None
+        assert data["status"] in ("idle", "scanning")
+        assert "progress" in data
+        assert "phase" in data
+        assert "total" in data
+        assert "completed" in data
 
 
 class TestScanFull:
@@ -409,14 +418,46 @@ class TestScanFull:
         assert response_root == str(projects_root.resolve())
 
 
-class TestScanProjectStub:
-    """POST /api/scan/project/{project_id} — stub endpoint."""
+class TestScanProject:
+    """POST /api/scan/project/{project_id} — single project scan."""
 
-    def test_returns_501(
+    def test_returns_404_for_unknown_project(
         self, api_env: tuple[Session, TestClient]
     ) -> None:
-        """The single-project scan stub returns 501 Not Implemented."""
+        """A non-existent project ID returns 404."""
         _, client = api_env
-        resp = client.post("/api/scan/project/some-id")
+        resp = client.post("/api/scan/project/nonexistent-id")
 
-        assert resp.status_code == 501
+        assert resp.status_code == 404
+        assert resp.json()["detail"] == "Project not found."
+
+    def test_returns_422_for_project_without_path(
+        self, api_env: tuple[Session, TestClient]
+    ) -> None:
+        """A project with no path returns 422."""
+        session, client = api_env
+        project = _make_project(session, name="no-path-project", path=None)
+
+        resp = client.post(f"/api/scan/project/{project.id}")
+
+        assert resp.status_code == 422
+        assert resp.json()["detail"] == "Project has no path."
+
+    def test_returns_202_for_valid_project(
+        self,
+        api_env_with_projects: tuple[Session, TestClient, Path],
+    ) -> None:
+        """A valid project with a path returns 202 Accepted."""
+        session, client, projects_root = api_env_with_projects
+        project = _make_project(
+            session,
+            name="proj-a",
+            path=str(projects_root / "proj-a"),
+        )
+
+        resp = client.post(f"/api/scan/project/{project.id}")
+
+        assert resp.status_code == 202
+        data = resp.json()
+        assert data["detail"] == "Scan queued."
+        assert data["project_id"] == project.id
